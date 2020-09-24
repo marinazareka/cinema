@@ -4,6 +4,9 @@ import './index.css';
 import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './app/store';
+import { fetchFilm } from './features/film/filmSlice';
+
+store.dispatch(fetchFilm());
 
 ReactDOM.render(
   <React.StrictMode>

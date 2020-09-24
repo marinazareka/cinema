@@ -1,0 +1,17 @@
+{
+  "film": {
+    "title": "Harry Potter and the Prisoner of Azkaban",
+    "annotation":
+      "It's Harry's third year at Hogwarts; not only does he have a new 'Defense Against the Dark Arts' teacher, but there is also trouble brewing. Convicted murderer Sirius Black has escaped the Wizards' Prison and is coming after Harry.",
+    "posterUrl": "posterHP3.jpg",
+    "country": ["UK", "USA"],
+    "certificate": "16+",
+    "imdbRating": 7.9,
+    "runtime": 142,
+    "genre": ["Adventure", "Family", "Fantasy"]
+  },
+    "comments": [
+      { "id": 1, "body": "some comment", "postId": 1 }
+    ],
+    "profile": { "name": "typicode" }
+  }

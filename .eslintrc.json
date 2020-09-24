@@ -66,7 +66,7 @@
     "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
     "radix": ["error", "as-needed"],
     "curly": "error",
-    "react/jsx-one-expression-per-line": ["error", { "allow": "literal" }],
+    "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
     "no-use-before-define": 0,
     "@typescript-eslint/no-use-before-define": 0
   }
