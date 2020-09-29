@@ -68,6 +68,7 @@
     "curly": "error",
     "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
     "no-use-before-define": 0,
-    "@typescript-eslint/no-use-before-define": 0
+    "@typescript-eslint/no-use-before-define": 0,
+    "no-param-reassign": ["error", { "props": false }]
   }
 }

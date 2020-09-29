@@ -105,3 +105,34 @@ export const Calendar = styled(DayPicker)`
     }
   }
 `;
+
+export const TimeContainer = styled.div`
+  min-height: 24px;
+`;
+
+export const Tip = styled.div`
+  display: inline-block;
+  line-height: 24px;
+  padding-left: 4px;
+`;
+
+interface TimeButtonProps {
+  active: boolean;
+}
+
+export const TimeButton = styled.button`
+  border: 1px solid ${colors.light};
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 4px;
+    padding: 4px;
+    font-size: inherit;
+    background: none;
+    background-color: ${(props: TimeButtonProps) => props.active && colors.light};
+    color: ${(props: TimeButtonProps) => (props.active ? colors.darkBlue : 'inherit')};
+
+    &:hover {
+      background-color: ${colors.light};
+      color: ${colors.darkBlue};
+    }
+`;
