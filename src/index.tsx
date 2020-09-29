@@ -5,8 +5,10 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './app/store';
 import { fetchFilm } from './features/film/filmSlice';
+import { fetchDates } from './features/showtime/showTimeSlice';
 
 store.dispatch(fetchFilm());
+store.dispatch(fetchDates());
 
 ReactDOM.render(
   <React.StrictMode>

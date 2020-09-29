@@ -59,7 +59,7 @@ export const Calendar = styled(DayPicker)`
       }
 
       &:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover,
-      &--selected {
+      &--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
         background-color: ${colors.light};
         color: ${colors.darkBlue};
       }
