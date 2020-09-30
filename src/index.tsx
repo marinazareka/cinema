@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './app/store';
 import { fetchFilm } from './features/film/filmSlice';
-import { fetchDates } from './features/showtime/showTimeSlice';
+import { fetchShowtimes } from './features/showtime/showtimeSlice';
 
-store.dispatch(fetchFilm());
-store.dispatch(fetchDates());
+store.dispatch(fetchFilm()).catch((e) => { console.error('Fail to fetch film data ', e); });
+store.dispatch(fetchShowtimes()).catch((e) => { console.error('Fail to fetch showtimes ', e); });
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,44 +1,52 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import { RootState } from '../../app/store';
 
-interface FilmState {
+interface Film {
   title: string;
   annotation: string;
   posterUrl: string;
   country: Array<string>;
   certificate: string;
   imdbRating: number;
-  runtime: number;
+  runtime: string;
   genre: Array<string>;
 }
 
-const initialState: FilmState = {
+const initialState: Film = {
   title: '',
   annotation: '',
-  posterUrl: 'string',
+  posterUrl: '',
   country: [],
   certificate: '',
   imdbRating: 0,
-  runtime: 0,
+  runtime: '',
   genre: [],
 };
 
 export const fetchFilm = createAsyncThunk('film/fetchFilm', async () => {
   const response = await axios.get('/film');
-  return response.data;
+  return response.data as Film;
 });
 
 const filmSlice = createSlice({
   name: 'film',
   initialState,
   reducers: {},
-  extraReducers: {
-    // @ts-ignore
-    [fetchFilm.fulfilled]: (state, action) => action.payload,
+  extraReducers: (builder) => {
+    builder.addCase(fetchFilm.fulfilled, (state, action: PayloadAction<Film>) => action.payload);
   },
 });
 
-export const getFilmInfo = (state: RootState) => state.film;
+export const getFilmInfo = (state: RootState): Film => {
+  dayjs.extend(duration);
+  const dur = dayjs.duration(state.film.runtime);
+  return {
+    ...state.film,
+    runtime: `${dur.hours()}h${dur.minutes() && `${dur.minutes()}min`}`,
+  };
+};
 
 export default filmSlice.reducer;

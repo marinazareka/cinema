@@ -24,14 +24,10 @@ const Film: FunctionComponent = () => {
         </span>
         <span>
           <span>
-            <time>
-              234
-            </time>
+            {film.runtime}
           </span>
           <span>
-            <time>
-              {film.imdbRating}
-            </time>
+            {film.imdbRating}
           </span>
         </span>
       </Info>

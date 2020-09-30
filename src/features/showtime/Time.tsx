@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
-import { getAvailableTime, Show, setShowChoosen, getDateChoosen } from './showTimeSlice';
+import { getAvailableTime, Show, setShowChoosen, getDateChoosen } from './showtimeSlice';
 import { TimeButton, TimeContainer, Tip } from './styled';
 
 const Time: FunctionComponent = () => {
@@ -26,6 +26,7 @@ const Time: FunctionComponent = () => {
                 key={show.time}
                 active={dayjs(show.time).isSame(dayjs(timeChoosen))}
                 type="button"
+                disabled={dayjs().isAfter(dayjs(show.time))}
                 onClick={() => onChange(show)}
               >
                 {dayjs(show.time).format('HH:mm')}

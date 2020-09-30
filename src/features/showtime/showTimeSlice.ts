@@ -8,31 +8,29 @@ export interface Show {
   hall: number;
 }
 
-interface ShowTime {
+interface Showtime {
   date: string;
   shows: Array<Show>;
 }
 
 interface State {
-  showtimes: Array<ShowTime>;
+  showtimes: Array<Showtime>;
   dateChoosen: string;
-  dateTimeChoosen: string;
   hall?: number;
 }
 
 const initialState: State = {
   showtimes: [],
   dateChoosen: new Date().toISOString(),
-  dateTimeChoosen: '',
 };
 
-export const fetchDates = createAsyncThunk('showTime/fetchDates', async () => {
+export const fetchShowtimes = createAsyncThunk('showtime/fetchShowtimes', async () => {
   const response = await axios.get('/showtimes');
-  return response.data as Array<ShowTime>;
+  return response.data as Array<Showtime>;
 });
 
-const showTimeSlice = createSlice({
-  name: 'showTime',
+const showtimeSlice = createSlice({
+  name: 'showtime',
   initialState,
   reducers: {
     setDateChoosen: (state, action: PayloadAction<string>) => {
@@ -45,14 +43,14 @@ const showTimeSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDates.fulfilled, (state, action: PayloadAction<Array<ShowTime>>) => {
+    builder.addCase(fetchShowtimes.fulfilled, (state, action: PayloadAction<Array<Showtime>>) => {
       state.showtimes = action.payload;
     });
   },
 });
 
-export const { setDateChoosen, setShowChoosen } = showTimeSlice.actions;
-export const getAvailableShowTimes = (state: RootState): Array<ShowTime> => state.showtime.showtimes;
+export const { setDateChoosen, setShowChoosen } = showtimeSlice.actions;
+export const getAvailableShowTimes = (state: RootState): Array<Showtime> => state.showtime.showtimes;
 export const getDateChoosen = (state: RootState): Date => new Date(state.showtime.dateChoosen);
 export const getAvailableTime = (state: RootState): Array<Show> => {
   const times = state.showtime.showtimes.find(
@@ -62,4 +60,4 @@ export const getAvailableTime = (state: RootState): Array<Show> => {
   return times || [];
 };
 
-export default showTimeSlice.reducer;
+export default showtimeSlice.reducer;

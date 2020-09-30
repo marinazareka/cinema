@@ -14,29 +14,31 @@ const generateTime = (item) => {
 }
 
 const generateShowTimes = () => {
-  const shows = [];
+  const showtimes = [];
   let dateStart = dayjs().startOf('date');
   const dateEnd = dayjs().add(14, 'days');
   while (dateEnd.diff(dateStart, 'days') >= 0) {
-    shows.push({
+    const shows = dayjs().isSame(dateStart, 'date') || getRandomIntInclusive(0, 1)
+    ? [
+        {
+          time: generateTime(dateStart),
+          hall: 1
+        },
+        {
+          time: generateTime(dateStart),
+          hall: 2
+        },
+      ]
+    : [];
+
+    showtimes.push({
       date: dateStart.format(),
-      shows: dayjs().isSame(dateStart) || getRandomIntInclusive(0, 1)
-        ? [
-            {
-              time: generateTime(dateStart),
-              hall: 1
-            },
-            {
-              time: generateTime(dateStart),
-              hall: 2
-            },
-          ]
-        : []
+      shows: shows.sort((date1, date2) => dayjs(date1.time).diff(dayjs(date2.time)))
     });
 
     dateStart = dateStart.add(1, 'days');
   }
-  return shows;
+  return showtimes;
 }
 
 const generateData = () => {

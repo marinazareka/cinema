@@ -1,13 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import filmReducer from '../features/film/filmSlice';
-import showTimeSlice from '../features/showtime/showTimeSlice';
+import showtimeReducer from '../features/showtime/showtimeSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     film: filmReducer,
-    showtime: showTimeSlice,
+    showtime: showtimeReducer,
   },
 });
 

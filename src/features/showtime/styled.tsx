@@ -131,8 +131,14 @@ export const TimeButton = styled.button`
     background-color: ${(props: TimeButtonProps) => props.active && colors.light};
     color: ${(props: TimeButtonProps) => (props.active ? colors.darkBlue : 'inherit')};
 
-    &:hover {
+    &:not[disabled]:hover {
       background-color: ${colors.light};
       color: ${colors.darkBlue};
+    }
+
+    &[disabled] {
+      background-color: ${colors.dateDisable};
+      border-color: ${colors.dateDisable};
+      cursor: default;
     }
 `;

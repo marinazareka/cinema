@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DayModifiers } from 'react-day-picker';
 import { ShowTimeContainer, Calendar } from './styled';
-import { getAvailableShowTimes, getDateChoosen, setDateChoosen } from './showTimeSlice';
+import { getAvailableShowTimes, getDateChoosen, setDateChoosen } from './showtimeSlice';
 import Time from './Time';
 
 const ShowTime: FunctionComponent = () => {
