@@ -1,24 +1,41 @@
 const film = require('./db.json');
+const cinema = require('./cinema.json');
 const dayjs = require('dayjs');
+
+const showDaysProbability = 0.7;
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomWithProbability(prob) {
+  var notRandomNumbers = Array(10).fill(1, 0, prob * 10).fill(0, prob * 10, 10);
+  return notRandomNumbers[Math.floor(Math.random() * notRandomNumbers.length)];
+}
+
+function getProbabilityFromDiff(diff) {
+  // use exponential function for similarity of occupation behavior
+  // depending on the proximity of the date 
+  const probability = Math.pow(0.892, diff) - 0.2;
+  return +probability.toFixed(1);
 }
 
 const generateTime = (item) => {
   const hours = [10, 14, 18];
   const minutes = [20, 30, 50];
-  return item.hour(hours[getRandomIntInclusive(0, 2)]).minute(minutes[getRandomIntInclusive(0, 2)]).format();
+  return item.hour(hours[getRandomIntInclusive(0, 2)]).minute(minutes[getRandomIntInclusive(0, 2)]).format('YYYY-MM-DDTHH:mm:ss');
 }
 
 const generateShowTimes = () => {
   const showtimes = [];
+  const showseats = [];
+  const rows = cinema.hall.rows;
   let dateStart = dayjs().startOf('date');
   const dateEnd = dayjs().add(14, 'days');
   while (dateEnd.diff(dateStart, 'days') >= 0) {
-    const shows = dayjs().isSame(dateStart, 'date') || getRandomIntInclusive(0, 1)
+    const shows = dayjs().isSame(dateStart, 'date') || randomWithProbability(showDaysProbability)
     ? [
         {
           time: generateTime(dateStart),
@@ -36,15 +53,31 @@ const generateShowTimes = () => {
       shows: shows.sort((date1, date2) => dayjs(date1.time).diff(dayjs(date2.time)))
     });
 
+    const occupiedProbability = getProbabilityFromDiff(dayjs(dateStart).diff(dayjs(), 'day'));
+    shows.forEach(show => {
+      showseats.push({
+        date: show.time,
+        rows: rows.map(row => ({
+          ...row,
+          seats: row.seats.map(seat => ({
+            ...seat,
+            occupied: !seat.disabled && !!randomWithProbability(occupiedProbability)
+          })
+        )}))
+      })
+    })
+
     dateStart = dateStart.add(1, 'days');
   }
-  return showtimes;
+  return { showtimes, showseats };
 }
 
 const generateData = () => {
+  const { showtimes, showseats } = generateShowTimes();
   return {
     film,
-    showtimes: generateShowTimes()
+    showtimes,
+    seats: showseats
   };
 };
 
