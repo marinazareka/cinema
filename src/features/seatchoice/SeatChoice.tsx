@@ -1,8 +1,18 @@
 import React, { FunctionComponent } from 'react';
-import { SeatChoiceContainer } from './styled';
+import { useSelector } from 'react-redux';
+import { SeatChoiceContainer, Checkout } from './styled';
+import CinemaHall from './CinemaHall';
+import { getSeatsOccupied } from './seatChoiceSlice';
 
-const SeatChoice: FunctionComponent = () => (
-  <SeatChoiceContainer />
-);
+const SeatChoice: FunctionComponent = () => {
+  const disabled = !useSelector(getSeatsOccupied).length;
+
+  return (
+    <SeatChoiceContainer disabled={disabled}>
+      <CinemaHall />
+      <Checkout />
+    </SeatChoiceContainer>
+  );
+};
 
 export default SeatChoice;

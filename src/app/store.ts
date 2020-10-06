@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import filmReducer from '../features/film/filmSlice';
 import showtimeReducer from '../features/showtime/showtimeSlice';
+import seatchoiceReducer from '../features/seatchoice/seatChoiceSlice';
 
 export const store = configureStore({
   reducer: {
     film: filmReducer,
     showtime: showtimeReducer,
+    seatchoice: seatchoiceReducer,
   },
 });
 

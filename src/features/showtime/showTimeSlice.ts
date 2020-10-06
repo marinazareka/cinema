@@ -15,13 +15,13 @@ interface Showtime {
 
 interface State {
   showtimes: Array<Showtime>;
-  dateChoosen: string;
+  dateChosen: string;
   hall?: number;
 }
 
 const initialState: State = {
   showtimes: [],
-  dateChoosen: new Date().toISOString(),
+  dateChosen: new Date().toISOString(),
 };
 
 export const fetchShowtimes = createAsyncThunk('showtime/fetchShowtimes', async () => {
@@ -33,12 +33,12 @@ const showtimeSlice = createSlice({
   name: 'showtime',
   initialState,
   reducers: {
-    setDateChoosen: (state, action: PayloadAction<string>) => {
-      state.dateChoosen = action.payload;
+    setDateChosen: (state, action: PayloadAction<string>) => {
+      state.dateChosen = action.payload;
       state.hall = undefined;
     },
-    setShowChoosen: (state, action: PayloadAction<Show>) => {
-      state.dateChoosen = action.payload.time;
+    setShowChosen: (state, action: PayloadAction<Show>) => {
+      state.dateChosen = action.payload.time;
       state.hall = action.payload.hall;
     },
   },
@@ -49,12 +49,12 @@ const showtimeSlice = createSlice({
   },
 });
 
-export const { setDateChoosen, setShowChoosen } = showtimeSlice.actions;
+export const { setDateChosen, setShowChosen } = showtimeSlice.actions;
 export const getAvailableShowTimes = (state: RootState): Array<Showtime> => state.showtime.showtimes;
-export const getDateChoosen = (state: RootState): Date => new Date(state.showtime.dateChoosen);
+export const getDateChosen = (state: RootState): Date => new Date(state.showtime.dateChosen);
 export const getAvailableTime = (state: RootState): Array<Show> => {
   const times = state.showtime.showtimes.find(
-    (item) => dayjs(item.date).isSame(dayjs(state.showtime.dateChoosen), 'day')
+    (item) => dayjs(item.date).isSame(dayjs(state.showtime.dateChosen), 'day')
   )?.shows;
 
   return times || [];

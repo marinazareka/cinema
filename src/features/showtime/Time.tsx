@@ -1,21 +1,23 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
-import { getAvailableTime, Show, setShowChoosen, getDateChoosen } from './showtimeSlice';
+import { getAvailableTime, Show, setShowChosen, getDateChosen } from './showtimeSlice';
+import { fetchSeatsOccupied } from '../seatchoice/seatChoiceSlice';
 import { TimeButton, TimeContainer, Tip } from './styled';
 
 const Time: FunctionComponent = () => {
   const dispatch = useDispatch();
   const times = useSelector(getAvailableTime);
-  const timeChoosen = useSelector(getDateChoosen);
+  const timeChosen = useSelector(getDateChosen);
 
   function onChange(show: Show) {
-    dispatch(setShowChoosen(show));
+    dispatch(setShowChosen(show));
+    dispatch(fetchSeatsOccupied(show.time));
   }
 
   return (
     <TimeContainer>
-      {times.length && (
+      {times.length ? (
         <>
           <Tip>
             Showtimes:
@@ -24,7 +26,7 @@ const Time: FunctionComponent = () => {
             {times.map((show) => (
               <TimeButton
                 key={show.time}
-                active={dayjs(show.time).isSame(dayjs(timeChoosen))}
+                active={dayjs(show.time).isSame(dayjs(timeChosen))}
                 type="button"
                 disabled={dayjs().isAfter(dayjs(show.time))}
                 onClick={() => onChange(show)}
@@ -34,6 +36,8 @@ const Time: FunctionComponent = () => {
             ))}
           </>
         </>
+      ) : (
+        <Tip>Please select a date to find the showtimes.</Tip>
       )}
     </TimeContainer>
   );

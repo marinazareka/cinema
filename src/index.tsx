@@ -6,9 +6,11 @@ import App from './App';
 import { store } from './app/store';
 import { fetchFilm } from './features/film/filmSlice';
 import { fetchShowtimes } from './features/showtime/showtimeSlice';
+import { fetchSeats } from './features/seatchoice/seatChoiceSlice';
 
 store.dispatch(fetchFilm()).catch((e) => { console.error('Fail to fetch film data ', e); });
 store.dispatch(fetchShowtimes()).catch((e) => { console.error('Fail to fetch showtimes ', e); });
+store.dispatch(fetchSeats()).catch((e) => { console.error('Fail to fetch seats ', e); });
 
 ReactDOM.render(
   <React.StrictMode>
