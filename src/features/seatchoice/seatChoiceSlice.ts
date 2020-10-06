@@ -24,9 +24,10 @@ interface Row {
 interface State {
   rows: Array<Row>;
   occupied: Array<number>;
+  seatsChosen: Array<Seat>;
 }
 
-const initialState: State = { rows: [], occupied: [] };
+const initialState: State = { rows: [], occupied: [], seatsChosen: [] };
 
 export const fetchSeats = createAsyncThunk('seatchoice/fetchSeats', async () => {
   const response = await axios.get('/seats');
@@ -45,6 +46,14 @@ const seatChoiceSlice = createSlice({
     resetOccupied: (state) => {
       state.occupied = [];
     },
+    toggleSeatChosen: (state, action: PayloadAction<Seat>) => {
+      const index = state.seatsChosen.findIndex((i) => i.id === action.payload.id);
+      if (index > -1) {
+        state.seatsChosen.splice(index, 1);
+      } else {
+        state.seatsChosen.push(action.payload);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSeats.fulfilled, (state, action: PayloadAction<Array<Row>>) => {
@@ -56,8 +65,9 @@ const seatChoiceSlice = createSlice({
   },
 });
 
-export const { resetOccupied } = seatChoiceSlice.actions;
+export const { resetOccupied, toggleSeatChosen } = seatChoiceSlice.actions;
 export const getSeats = (state: RootState): Array<Row> => state.seatchoice.rows;
 export const getSeatsOccupied = (state: RootState): Array<number> => state.seatchoice.occupied;
+export const getSeatsChosen = (state: RootState): Array<Seat> => state.seatchoice.seatsChosen;
 
 export default seatChoiceSlice.reducer;

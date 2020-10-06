@@ -1,13 +1,23 @@
 import React, { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVirusSlash } from '@fortawesome/free-solid-svg-icons';
 import { Cinema, Screen, Row, RowSymbol, Seat, SeatHint, Legend } from './styled';
-import { getSeats, getSeatsOccupied, SeatType } from './seatChoiceSlice';
+import {
+  getSeats, getSeatsOccupied,
+  Seat as SeatI, SeatType,
+  toggleSeatChosen, getSeatsChosen
+} from './seatChoiceSlice';
 
 const CinemaHall: FunctionComponent = () => {
+  const dispatch = useDispatch();
   const rows = useSelector(getSeats);
   const occupied = useSelector(getSeatsOccupied);
+  const chosen = useSelector(getSeatsChosen);
+
+  const onChange = (seat: SeatI) => {
+    dispatch(toggleSeatChosen(seat));
+  };
 
   return (
     <Cinema>
@@ -21,6 +31,8 @@ const CinemaHall: FunctionComponent = () => {
                 key={seat.id}
                 seatType={seat.type}
                 disabled={seat.disabled || occupied.some((i) => i === seat.id)}
+                chosen={chosen.some((i) => i.id === seat.id)}
+                onClick={() => onChange(seat)}
                 type="button"
               >
                 {seat.disabled ? (
@@ -55,7 +67,7 @@ const CinemaHall: FunctionComponent = () => {
         <span>disabled due to covid-19 prevention</span>
         <Seat type="button" disabled seatType={SeatType.Single} />
         <span>occupied</span>
-        <Seat type="button" disabled active seatType={SeatType.Single} />
+        <Seat type="button" disabled chosen seatType={SeatType.Single} />
         <span>your choice</span>
       </Legend>
     </Cinema>

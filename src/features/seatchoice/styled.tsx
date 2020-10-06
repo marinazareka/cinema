@@ -16,8 +16,8 @@ export const SeatChoiceContainer = styled.div`
 
   &::after {
     background-color: ${colors.light};
-    content: '';
     height: 100%;
+    /* content: ''; */
     opacity: ${(props: SeatChoiceProps) => (props.disabled ? 0.8 : 0)};
     position: absolute;
     width: 100%;
@@ -72,7 +72,7 @@ export const RowSymbol = styled.span`
 `;
 
 interface SeatProps {
-  active?: boolean;
+  chosen?: boolean;
   seatType: SeatType;
 }
 
@@ -93,15 +93,14 @@ export const Seat = styled.button`
   padding: 0;
   height: 26px;
 
-  background-color: ${(props: SeatProps) => (props.active ? colors.light : 'transparent')};
-  color: ${(props: SeatProps) => (props.active ? colors.dark : 'inherit')};
-  font-weight: ${(props: SeatProps) => props.active && 700};
+  background-color: ${(props: SeatProps) => (props.chosen ? colors.light : 'transparent')};
+  color: ${(props: SeatProps) => (props.chosen ? colors.dark : 'inherit')};
+  font-weight: ${(props: SeatProps) => props.chosen && 700};
   width: ${(props: SeatProps) => SeatTypeWidth[props.seatType]};
   
   &[disabled] {
-    background-color: ${colors.seatReserved};
-    border-color: ${colors.seatReserved};
-    color: ${colors.seatReservedText};
+    border-color: ${(props: SeatProps) => (!props.chosen && colors.seatReserved)};
+    background-color: ${(props: SeatProps) => (!props.chosen && colors.seatReserved)};
     cursor: default;
   }
   
