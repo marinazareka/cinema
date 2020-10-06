@@ -30,7 +30,7 @@ const generateTime = (item) => {
 
 const generateShowTimes = () => {
   const showtimes = [];
-  const showseats = [];
+  const occupied = [];
   const rows = cinema.hall.rows;
   let dateStart = dayjs().startOf('date');
   const dateEnd = dayjs().add(14, 'days');
@@ -55,29 +55,31 @@ const generateShowTimes = () => {
 
     const occupiedProbability = getProbabilityFromDiff(dayjs(dateStart).diff(dayjs(), 'day'));
     shows.forEach(show => {
-      showseats.push({
+      const seats = [];
+      rows.forEach(row => {
+        row.seats.forEach(seat => {
+          if (!seat.disabled && !!randomWithProbability(occupiedProbability))
+          seats.push(seat.id);
+        })
+      });
+      occupied.push({
         date: show.time,
-        rows: rows.map(row => ({
-          ...row,
-          seats: row.seats.map(seat => ({
-            ...seat,
-            occupied: !seat.disabled && !!randomWithProbability(occupiedProbability)
-          })
-        )}))
-      })
-    })
+        occupied: seats
+      });
+    });
 
     dateStart = dateStart.add(1, 'days');
   }
-  return { showtimes, showseats };
+  return { showtimes, occupied };
 }
 
 const generateData = () => {
-  const { showtimes, showseats } = generateShowTimes();
+  const { showtimes, occupied } = generateShowTimes();
   return {
     film,
     showtimes,
-    seats: showseats
+    seats: cinema.hall.rows,
+    occupied
   };
 };
 
