@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { SeatChoiceContainer, Checkout } from './styled';
-import CinemaHall from './CinemaHall';
+import { SeatChoiceContainer } from './styled';
+import CinemaHall from './cinema/Hall';
+import Checkout from './checkout/Checkout';
 import { getSeatsOccupied } from './seatChoiceSlice';
 
 const SeatChoice: FunctionComponent = () => {

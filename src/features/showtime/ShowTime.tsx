@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { DayModifiers } from 'react-day-picker';
 import { ShowTimeContainer, Calendar } from './styled';
 import { getAvailableShowTimes, getDateChosen, setDateChosen } from './showtimeSlice';
-import { resetOccupied } from '../seatchoice/seatChoiceSlice';
+import { resetSeats } from '../seatchoice/seatChoiceSlice';
 import Time from './Time';
 
 const ShowTime: FunctionComponent = () => {
@@ -15,7 +15,7 @@ const ShowTime: FunctionComponent = () => {
     if (modifiers.disabled) return;
     if (!modifiers.selected) {
       dispatch(setDateChosen(day.toISOString()));
-      dispatch(resetOccupied());
+      dispatch(resetSeats());
     }
   }
 

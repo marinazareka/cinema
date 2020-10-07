@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 import { getAvailableTime, Show, setShowChosen, getDateChosen } from './showtimeSlice';
-import { fetchSeatsOccupied } from '../seatchoice/seatChoiceSlice';
+import { fetchSeatsOccupied, resetChosen } from '../seatchoice/seatChoiceSlice';
 import { TimeButton, TimeContainer, Tip } from './styled';
 
 const Time: FunctionComponent = () => {
@@ -12,6 +12,7 @@ const Time: FunctionComponent = () => {
 
   function onChange(show: Show) {
     dispatch(setShowChosen(show));
+    dispatch(resetChosen());
     dispatch(fetchSeatsOccupied(show.time));
   }
 
