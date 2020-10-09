@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors, fontFamilies } from '../../ui/Settings';
+import { colors } from '../../ui/Settings';
 
 export const FilmContainer = styled.div`
   display: flex;

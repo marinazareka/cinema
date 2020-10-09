@@ -10,11 +10,11 @@ const Time: FunctionComponent = () => {
   const times = useSelector(getAvailableTime);
   const timeChosen = useSelector(getDateChosen);
 
-  function onChange(show: Show) {
+  const onChange = (show: Show) => {
     dispatch(setShowChosen(show));
     dispatch(resetChosen());
     dispatch(fetchSeatsOccupied(show.time));
-  }
+  };
 
   return (
     <TimeContainer>

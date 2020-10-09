@@ -1,38 +1,44 @@
 import React, { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
-import { Container, CheckoutBlock, SeatsSubtotal, Total, Confirm } from './styled';
-import { getGroupedSeatsChosen, getSeatsChosen } from '../seatChoiceSlice';
-import SeatGroup from './SeatGroup';
+import { useSelector, useDispatch } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { Container, CheckoutBlock, ButtonsBlock, ArrowButton } from './styled';
+import TotalBlock from './TotalBlock';
+import Form from './Form';
+import Gratitude from './Gratitude';
+import { getStep, nextStep, prevStep } from './checkoutSlice';
+import { areSeatsChosen } from '../seatChoiceSlice';
 
-const alertCheckout = () => {
-  // eslint-disable-next-line no-alert
-  console.log('alert');
-};
+enum CheckoutStep {
+  Total = 0,
+  Form = 1,
+  Gratitude = 2
+}
 
 const Checkout: FunctionComponent = () => {
-  const seatGroup = useSelector(getGroupedSeatsChosen);
-  const seatChosen = useSelector(getSeatsChosen);
-  const total = seatChosen.reduce((sum, current) => sum + current.price, 0);
+  const step = useSelector(getStep);
+  const dispatch = useDispatch();
+  const seatsChosen = useSelector(areSeatsChosen);
 
   return (
     <Container>
       <CheckoutBlock>
-        <div>Your choice</div>
-        <hr />
-        {total > 0 && (
-        <>
-          <SeatsSubtotal>
-            {seatGroup.map((group) => (
-              group.seats.length !== 0 && <SeatGroup group={group} />
-            ))}
-          </SeatsSubtotal>
-          <hr />
-          <Total>
-            <span>{`Total: ${total}£`}</span>
-            <Confirm type="button" onClick={() => alertCheckout()}>Confirm</Confirm>
-          </Total>
-        </>
-        )}
+        {step === CheckoutStep.Total && <TotalBlock />}
+        {step === CheckoutStep.Form && <Form />}
+        {step === CheckoutStep.Gratitude && <Gratitude />}
+
+        <ButtonsBlock>
+          {step === CheckoutStep.Form && (
+            <ArrowButton type="button" onClick={() => dispatch(prevStep())} title="Previous">
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </ArrowButton>
+          )}
+          {seatsChosen && step < CheckoutStep.Form && (
+            <ArrowButton type="button" onClick={() => dispatch(nextStep())} title="Next">
+              <FontAwesomeIcon icon={faArrowRight} />
+            </ArrowButton>
+          )}
+        </ButtonsBlock>
       </CheckoutBlock>
     </Container>
   );

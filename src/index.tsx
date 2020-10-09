@@ -20,3 +20,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
+
+export type AppDispatch = typeof store.dispatch;

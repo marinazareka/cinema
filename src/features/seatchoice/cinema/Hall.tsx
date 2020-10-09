@@ -22,6 +22,7 @@ const Hall: FunctionComponent = () => {
           <div>
             {row.seats.map((seat, index) => (
               <Seat
+                key={seat.id}
                 seat={seat}
                 disabled={seat.disabled || occupied.some((i) => i === seat.id)}
                 chosen={chosen.some((i) => i.id === seat.id)}

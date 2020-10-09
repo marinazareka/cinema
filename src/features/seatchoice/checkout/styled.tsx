@@ -18,13 +18,16 @@ export const Container = styled.div`
 `;
 
 export const CheckoutBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: ${colors.darkOpacity};
   border: 2px solid ${colors.light};
   color: ${colors.light};
-  min-height: 300px;
+  min-height: 400px;
   padding: 32px;
   position: relative;
-  width: 260px;
+  width: 300px;
 
   @media screen and (max-width: 320px) {
     padding: 12px;
@@ -106,4 +109,44 @@ export const Confirm = styled.button`
       border: 0;
     }
   }
+`;
+
+export const ButtonsBlock = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ArrowButton = styled.button`
+  appearance: none;
+  background-color: transparent;
+  color: ${colors.light};
+  border: 1px solid;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${colors.light};
+    color: ${colors.dark};
+  }
+`;
+
+export const Delimeter = styled.hr`
+  margin: 16px 0;
+`;
+
+export const Label = styled.label`
+  padding-bottom: 8px;
+`;
+
+export const Input = styled.input`
+  height: 26px;
+  background-color: ${colors.light};
+  border: none;
+`;
+
+export const Group = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
 `;
