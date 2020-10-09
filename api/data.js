@@ -2,7 +2,7 @@ const film = require('./db.json');
 const cinema = require('./cinema.json');
 const dayjs = require('dayjs');
 
-const showDaysProbability = 0.7;
+const showDaysProbability = 0.9;
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -79,7 +79,8 @@ const generateData = () => {
     film,
     showtimes,
     seats: cinema.hall.rows,
-    occupied
+    occupied,
+    reserved: []
   };
 };
 
