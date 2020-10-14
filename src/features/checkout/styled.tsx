@@ -150,3 +150,27 @@ export const Group = styled.div`
   flex-direction: column;
   padding-bottom: 24px;
 `;
+
+export const GratitudeBlock = styled.div`
+  & > p {
+    padding-bottom: 8px;
+  }
+
+  button {
+    margin-top: 8px;
+  }
+`;
+
+export const Reservation = styled.div`
+  border-left: 1px solid #fff;
+  padding-left: 8px;
+  margin: 0 0 16px 16px;
+
+  & > p {
+    padding-bottom: 8px;
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+`;

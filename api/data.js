@@ -1,5 +1,5 @@
 const film = require('./db.json');
-const cinema = require('./cinema.json');
+const rows = require('./rows.json');
 const dayjs = require('dayjs');
 
 const showDaysProbability = 0.9;
@@ -31,7 +31,6 @@ const generateTime = (item) => {
 const generateShowTimes = () => {
   const showtimes = [];
   const occupied = [];
-  const rows = cinema.hall.rows;
   let dateStart = dayjs().startOf('date');
   const dateEnd = dayjs().add(14, 'days');
   while (dateEnd.diff(dateStart, 'days') >= 0) {
@@ -77,8 +76,12 @@ const generateData = () => {
   const { showtimes, occupied } = generateShowTimes();
   return {
     film,
-    showtimes,
-    seats: cinema.hall.rows,
+    shows: {
+      showtimes,
+      cinema: "WorldFilm",
+      address: "London, 8 Leicester Square",
+    },
+    seats: rows,
     occupied,
     reserved: []
   };

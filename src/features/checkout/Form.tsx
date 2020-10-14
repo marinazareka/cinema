@@ -21,7 +21,9 @@ const Form: FunctionComponent = () => {
   const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
   const onMailChanged = (e: React.ChangeEvent<HTMLInputElement>) => setUserMail(e.target.value);
 
-  const saveReservation = async () => {
+  const saveReservation = async (event: React.FormEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
     const resultAction = await dispatch(postReservation({ name: userName, mail: userMail, date, seatsIds: chosen }));
     if (postReservation.fulfilled.match(resultAction)) {
       const response = unwrapResult(resultAction);
@@ -31,7 +33,6 @@ const Form: FunctionComponent = () => {
 
   return (
     <div>
-
       {status === Status.Failed ? (
         <p>
           Sorry, there was some error while saving your data.
@@ -44,7 +45,7 @@ const Form: FunctionComponent = () => {
         </p>
       )}
       <Delimeter />
-      <form>
+      <form onSubmit={saveReservation}>
         <Group>
           <Label htmlFor="name">Your name</Label>
           <Input type="text" id="name" name="name" value={userName} onChange={onNameChanged} required />
@@ -53,7 +54,7 @@ const Form: FunctionComponent = () => {
           <Label htmlFor="email">Your e-mail</Label>
           <Input type="email" id="email" name="email" value={userMail} onChange={onMailChanged} required />
         </Group>
-        <Confirm type="submit" disabled={status === Status.Pending} onClick={saveReservation}>Confirm</Confirm>
+        <Confirm type="submit" disabled={status === Status.Pending}>Confirm</Confirm>
       </form>
     </div>
   );
