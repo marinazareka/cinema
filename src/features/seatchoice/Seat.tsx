@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVirusSlash } from '@fortawesome/free-solid-svg-icons';
 import { SeatHint } from './styled';
-import { Seat } from '../styled';
+import { Seat } from '../../ui/styledComponents';
 import {
   Seat as SeatI,
   toggleSeatChosen
-} from '../seatChoiceSlice';
+} from './seatChoiceSlice';
 
 interface Props {
   seat: SeatI;

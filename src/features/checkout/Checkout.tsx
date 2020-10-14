@@ -6,19 +6,26 @@ import { Container, CheckoutBlock, ButtonsBlock, ArrowButton } from './styled';
 import TotalBlock from './TotalBlock';
 import Form from './Form';
 import Gratitude from './Gratitude';
-import { getStep, nextStep, prevStep } from './checkoutSlice';
-import { areSeatsChosen } from '../seatChoiceSlice';
-
-enum CheckoutStep {
-  Total = 0,
-  Form = 1,
-  Gratitude = 2
-}
+import { getStep, nextStep, prevStep, CheckoutStep } from './checkoutSlice';
+import { areSeatsChosen, toggleSeatChoice } from '../seatchoice/seatChoiceSlice';
+import { toggleShowTime } from '../showtime/showtimeSlice';
 
 const Checkout: FunctionComponent = () => {
   const step = useSelector(getStep);
   const dispatch = useDispatch();
   const seatsChosen = useSelector(areSeatsChosen);
+
+  const nextClick = () => {
+    dispatch(nextStep());
+    dispatch(toggleSeatChoice());
+    dispatch(toggleShowTime());
+  };
+
+  const prevClick = () => {
+    dispatch(prevStep());
+    dispatch(toggleSeatChoice());
+    dispatch(toggleShowTime());
+  };
 
   return (
     <Container>
@@ -29,12 +36,12 @@ const Checkout: FunctionComponent = () => {
 
         <ButtonsBlock>
           {step === CheckoutStep.Form && (
-            <ArrowButton type="button" onClick={() => dispatch(prevStep())} title="Previous">
+            <ArrowButton type="button" onClick={prevClick} title="Previous">
               <FontAwesomeIcon icon={faArrowLeft} />
             </ArrowButton>
           )}
-          {seatsChosen && step < CheckoutStep.Form && (
-            <ArrowButton type="button" onClick={() => dispatch(nextStep())} title="Next">
+          {seatsChosen && step === CheckoutStep.Total && (
+            <ArrowButton type="button" onClick={nextClick} title="Next">
               <FontAwesomeIcon icon={faArrowRight} />
             </ArrowButton>
           )}

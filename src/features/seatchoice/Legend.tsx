@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVirusSlash } from '@fortawesome/free-solid-svg-icons';
 import { Legend } from './styled';
-import { Seat } from '../styled';
-import { SeatType, SeatTypeTitle } from '../seatChoiceSlice';
+import { Seat } from '../../ui/styledComponents';
+import { SeatType, SeatTypeTitle } from '../../types/types';
 
 const LegendComponent: FunctionComponent = () => (
   <>

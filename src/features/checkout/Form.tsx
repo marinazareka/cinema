@@ -2,11 +2,12 @@ import React, { FunctionComponent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Delimeter, Group, Label, Input, Confirm } from './styled';
-import { getSeatsChosenIds, addReserved } from '../seatChoiceSlice';
-import { getDateChosen } from '../../showtime/showtimeSlice';
-import { AppDispatch } from '../../../index';
+import { getSeatsChosenIds, addReserved } from '../seatchoice/seatChoiceSlice';
+import { getDateChosen } from '../showtime/showtimeSlice';
+import { AppDispatch } from '../../index';
 
-import { getStatus, Status, postReservation } from './checkoutSlice';
+import { getStatus, postReservation } from './checkoutSlice';
+import { Status } from '../../types/types';
 
 const Form: FunctionComponent = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -16,7 +17,6 @@ const Form: FunctionComponent = () => {
 
   const [userName, setUserName] = useState('');
   const [userMail, setUserMail] = useState('');
-  const [error, setError] = useState(false);
 
   const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => setUserName(e.target.value);
   const onMailChanged = (e: React.ChangeEvent<HTMLInputElement>) => setUserMail(e.target.value);
@@ -26,19 +26,13 @@ const Form: FunctionComponent = () => {
     if (postReservation.fulfilled.match(resultAction)) {
       const response = unwrapResult(resultAction);
       dispatch(addReserved(response.seatsIds));
-      setError(false);
-      setUserName('');
-      setUserMail('');
-    } else {
-      setError(true);
-      console.error('if resultAction.payload');
     }
   };
 
   return (
     <div>
 
-      {error ? (
+      {status === Status.Failed ? (
         <p>
           Sorry, there was some error while saving your data.
           Try again, please.

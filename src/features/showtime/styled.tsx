@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import DayPicker from 'react-day-picker';
 import { colors } from '../../ui/Settings';
 
+interface SeatChoiceProps {
+  disabled: boolean;
+}
+
 export const ShowTimeContainer = styled.div`
   align-items: center;
   background-color: ${colors.darkBlue};
@@ -14,6 +18,13 @@ export const ShowTimeContainer = styled.div`
 
   @media screen and (min-width: 580px) {
     padding: 32px 48px;
+  }
+
+  &::after {
+    height: 100%;
+    content: ${(props: SeatChoiceProps) => (props.disabled ? 'open-quote' : 'inherit')};
+    position: absolute;
+    width: 100%;
   }
 `;
 

@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { TypeInfo} from './styled';
-import { Seat } from '../styled';
-import { GroupedSeats, SeatTypeTitle } from '../seatChoiceSlice';
+import { TypeInfo } from './styled';
+import { Seat } from '../../ui/styledComponents';
+import { GroupedSeats } from '../seatchoice/seatChoiceSlice';
+import { SeatTypeTitle } from '../../types/types';
 
 interface Props {
   group: GroupedSeats;

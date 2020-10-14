@@ -17,11 +17,13 @@ interface State {
   showtimes: Array<Showtime>;
   dateChosen: string;
   hall?: number;
+  disabled: boolean;
 }
 
 const initialState: State = {
   showtimes: [],
   dateChosen: new Date().toISOString(),
+  disabled: false,
 };
 
 export const fetchShowtimes = createAsyncThunk('showtime/fetchShowtimes', async () => {
@@ -41,6 +43,9 @@ const showtimeSlice = createSlice({
       state.dateChosen = action.payload.time;
       state.hall = action.payload.hall;
     },
+    toggleShowTime: (state) => {
+      state.disabled = !state.disabled;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchShowtimes.fulfilled, (state, action: PayloadAction<Array<Showtime>>) => {
@@ -49,7 +54,8 @@ const showtimeSlice = createSlice({
   },
 });
 
-export const { setDateChosen, setShowChosen } = showtimeSlice.actions;
+export const { setDateChosen, setShowChosen, toggleShowTime } = showtimeSlice.actions;
+export const getDisabled = (state: RootState): boolean => state.showtime.disabled;
 export const getAvailableShowTimes = (state: RootState): Array<Showtime> => state.showtime.showtimes;
 export const getDateChosen = (state: RootState): Date => new Date(state.showtime.dateChosen);
 export const getAvailableTime = (state: RootState): Array<Show> => {

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 import { SeatsSubtotal, Total } from './styled';
-import { getGroupedSeatsChosen, getSeatsChosen } from '../seatChoiceSlice';
+import { getGroupedSeatsChosen, getSeatsChosen } from '../seatchoice/seatChoiceSlice';
 import SeatGroup from './SeatGroup';
 
 const Checkout: FunctionComponent = () => {

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DayModifiers } from 'react-day-picker';
 import { ShowTimeContainer, Calendar } from './styled';
-import { getAvailableShowTimes, getDateChosen, setDateChosen } from './showtimeSlice';
+import { getAvailableShowTimes, getDateChosen, setDateChosen, getDisabled } from './showtimeSlice';
 import { resetSeats } from '../seatchoice/seatChoiceSlice';
 import Time from './Time';
 
@@ -10,6 +10,7 @@ const ShowTime: FunctionComponent = () => {
   const dispatch = useDispatch();
   const showtimes = useSelector(getAvailableShowTimes);
   const dateChosen = useSelector(getDateChosen);
+  const disabled = useSelector(getDisabled);
 
   function onChange(day: Date, modifiers: DayModifiers) {
     if (modifiers.disabled) return;
@@ -20,7 +21,7 @@ const ShowTime: FunctionComponent = () => {
   }
 
   return (
-    <ShowTimeContainer>
+    <ShowTimeContainer disabled={disabled}>
       {showtimes.length
         ? (
           <>
