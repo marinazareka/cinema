@@ -23,7 +23,7 @@ export interface UserData {
 }
 
 export interface ReservationData extends UserData {
-  date: Date;
+  showId: number;
   seatsIds: Array<number>;
 }
 

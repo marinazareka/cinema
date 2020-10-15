@@ -42,10 +42,10 @@ export const fetchSeats = createAsyncThunk('seatchoice/fetchSeats', async () => 
   return response.data as Array<Row>;
 });
 
-export const fetchSeatsOccupied = createAsyncThunk('seatchoice/fetchSeatsOccupied', async (date: string) => {
-  const occupiedResponse = await axios.get(`/occupied?date=${date}`);
+export const fetchSeatsOccupied = createAsyncThunk('seatchoice/fetchSeatsOccupied', async (showId: number) => {
+  const occupiedResponse = await axios.get(`/occupied?showId=${showId}`);
   const occupied = occupiedResponse.data as Array<Occupied>;
-  const reservedResponse = await axios.get(`/reserved?date=${date}`);
+  const reservedResponse = await axios.get(`/reserved?showId=${showId}`);
   const reserved = reservedResponse.data as Array<Reservation>;
   const activeReserved = reserved.filter((res: Reservation) => dayjs().isBefore(dayjs(res.until)));
   return [

@@ -22,7 +22,6 @@ export const postReservation = createAsyncThunk<Reservation, ReservationData>(
   async (reservation) => {
     const response = await axios.post('/reserved', {
       ...reservation,
-      date: dayjs(reservation.date).format('YYYY-MM-DDTHH:mm:ss'),
       until: dayjs().add(15, 'minute'),
     });
     return (await response.data) as Reservation;

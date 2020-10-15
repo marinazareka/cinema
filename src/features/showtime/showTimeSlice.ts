@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { RootState } from '../../app/store';
 
 export interface Show {
+  id: number;
   time: string;
   hall: number;
 }
@@ -26,6 +27,7 @@ interface Response extends CinemaData {
 
 interface State extends Response {
   dateChosen: string;
+  showId?: number;
   hall?: number;
   disabled: boolean;
 }
@@ -49,11 +51,13 @@ const showtimeSlice = createSlice({
   reducers: {
     setDateChosen: (state, action: PayloadAction<string>) => {
       state.dateChosen = action.payload;
+      state.showId = undefined;
       state.hall = undefined;
     },
     setShowChosen: (state, action: PayloadAction<Show>) => {
       state.dateChosen = action.payload.time;
       state.hall = action.payload.hall;
+      state.showId = action.payload.id;
     },
     toggleShowTime: (state) => {
       state.disabled = !state.disabled;
@@ -73,11 +77,13 @@ export const getDisabled = (state: RootState): boolean => state.showtime.disable
 export const getAvailableShowTimes = (state: RootState): Array<Showtime> => state.showtime.showtimes;
 export const getDateChosen = (state: RootState): Date => new Date(state.showtime.dateChosen);
 export const getShowChosen = (state: RootState): ShowData => ({
+  id: state.showtime.showId as number,
   time: state.showtime.dateChosen,
   hall: state.showtime.hall as number,
   cinema: state.showtime.cinema,
   address: state.showtime.address,
 });
+export const getShowIdChosen = (state: RootState): number => state.showtime.showId as number;
 export const getAvailableTime = (state: RootState): Array<Show> => {
   const times = state.showtime.showtimes.find(
     (item) => dayjs(item.date).isSame(dayjs(state.showtime.dateChosen), 'day')

@@ -31,10 +31,11 @@ const generateTime = (item) => {
 const generateShowTimes = () => {
   const showtimes = [];
   const occupied = [];
+  let id = 1;
   let dateStart = dayjs().startOf('date');
   const dateEnd = dayjs().add(14, 'days');
   while (dateEnd.diff(dateStart, 'days') >= 0) {
-    const shows = dayjs().isSame(dateStart, 'date') || randomWithProbability(showDaysProbability)
+    let shows = dayjs().isSame(dateStart, 'date') || randomWithProbability(showDaysProbability)
     ? [
         {
           time: generateTime(dateStart),
@@ -47,9 +48,11 @@ const generateShowTimes = () => {
       ]
     : [];
 
+    shows = shows.sort((date1, date2) => dayjs(date1.time).diff(dayjs(date2.time))).map((show) => ({...show, id: id++}));
+
     showtimes.push({
       date: dateStart.format(),
-      shows: shows.sort((date1, date2) => dayjs(date1.time).diff(dayjs(date2.time)))
+      shows,
     });
 
     const occupiedProbability = getProbabilityFromDiff(dayjs(dateStart).diff(dayjs(), 'day'));
@@ -62,6 +65,7 @@ const generateShowTimes = () => {
         })
       });
       occupied.push({
+        showId: show.id,
         date: show.time,
         occupied: seats
       });

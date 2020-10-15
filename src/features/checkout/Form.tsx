@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { Delimeter, Group, Label, Input, Confirm } from './styled';
 import { getSeatsChosenIds, addReserved } from '../seatchoice/seatChoiceSlice';
-import { getDateChosen } from '../showtime/showtimeSlice';
+import { getShowIdChosen } from '../showtime/showtimeSlice';
 import { AppDispatch } from '../../index';
 
 import { getStatus, postReservation } from './checkoutSlice';
@@ -11,7 +11,7 @@ import { Status } from '../../types/types';
 
 const Form: FunctionComponent = () => {
   const dispatch: AppDispatch = useDispatch();
-  const date = useSelector(getDateChosen);
+  const showId = useSelector(getShowIdChosen);
   const chosen = useSelector(getSeatsChosenIds);
   const status = useSelector(getStatus);
 
@@ -24,7 +24,12 @@ const Form: FunctionComponent = () => {
   const saveReservation = async (event: React.FormEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    const resultAction = await dispatch(postReservation({ name: userName, mail: userMail, date, seatsIds: chosen }));
+    const resultAction = await dispatch(postReservation({
+      name: userName,
+      mail: userMail,
+      showId,
+      seatsIds: chosen,
+    }));
     if (postReservation.fulfilled.match(resultAction)) {
       const response = unwrapResult(resultAction);
       dispatch(addReserved(response.seatsIds));
