@@ -25,7 +25,7 @@ export const SeatChoiceContainer = styled.div`
   &::after {
     background-color: ${colors.light};
     height: 100%;
-    content: ${(props: DisabledProps) => (props.disabled ? 'open-quote' : 'inherit')};
+    content: ${(props: DisabledProps) => (props.disabled ? 'no-open-quote' : 'inherit')};
     opacity: ${(props: DisabledProps) => (props.disabled ? 0.8 : 0)};
     position: absolute;
     width: 100%;

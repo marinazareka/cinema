@@ -22,7 +22,7 @@ export const ShowTimeContainer = styled.div`
 
   &::after {
     height: 100%;
-    content: ${(props: SeatChoiceProps) => (props.disabled ? 'open-quote' : 'inherit')};
+    content: ${(props: SeatChoiceProps) => (props.disabled ? 'no-open-quote' : 'inherit')};
     position: absolute;
     width: 100%;
   }
@@ -64,7 +64,7 @@ export const Calendar = styled(DayPicker)`
       }    
     
       &--outside {
-        border: none;
+        border-color: transparent;
         background-color: transparent;
         cursor: default;
       }

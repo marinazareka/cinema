@@ -21,22 +21,6 @@ export const Info = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 72%;
-
-  p + span {
-    border-top: 1px solid ${colors.textGray};
-    margin-top: 16px;
-    padding-top: 16px;
-  }
-
-  span {
-    color: ${colors.textGrayDark};
-    font-size: 14px;
-    padding: 8px 8px 8px 0;
-
-    svg {
-      padding-right: 4px;
-    }
-  }
 `;
 
 export const Title = styled.p`
@@ -46,5 +30,18 @@ export const Title = styled.p`
 
 export const Description = styled.p`
   max-width: 82%;
-  padding: 0 24px;
+  padding: 0 24px 16px;
+  line-height: 22px;
+  border-bottom: 1px solid ${colors.textGray};
+  margin-bottom: 16px;
+`;
+
+export const Detail = styled.span`
+  color: ${colors.textGrayDark};
+  font-size: 14px;
+  padding: 8px 8px 8px 0;
+
+  svg {
+    padding-right: 4px;
+  }
 `;

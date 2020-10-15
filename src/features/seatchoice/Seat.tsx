@@ -33,6 +33,7 @@ const SeatComponent: FunctionComponent<Props> = ({ seat, disabled, chosen, index
       chosen={chosen}
       onClick={() => onChange(seat)}
       type="button"
+      title={`seat ${index}${row}, ${type}, ${price} £`}
     >
       {seat.disabled ? (
         <FontAwesomeIcon icon={faVirusSlash} />

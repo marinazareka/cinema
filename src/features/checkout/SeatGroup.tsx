@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { TypeInfo } from './styled';
+import { TypeInfo, Calculation } from './styled';
 import { Seat } from '../../ui/styledComponents';
 import { GroupedSeats } from '../seatchoice/seatChoiceSlice';
 import { SeatTypeTitle } from '../../types/types';
@@ -17,12 +17,9 @@ const SeatGroup: FunctionComponent<Props> = ({ group }) => {
         <Seat disabled sample seatType={type} />
         <TypeInfo>{SeatTypeTitle[type]}</TypeInfo>
       </div>
-      <span>
-        {`× ${seats.length}`}
-      </span>
-      <span>
-        {`= ${seats.reduce((sum, current) => sum + current.price, 0)}£`}
-      </span>
+      <Calculation>
+        {`× ${seats.length} = ${seats.reduce((sum, current) => sum + current.price, 0)}£`}
+      </Calculation>
     </div>
   );
 };

@@ -20,7 +20,7 @@ export const Cinema = styled.div`
 
   &::after {
     height: 100%;
-    content: ${(props: DisabledProps) => (props.disabled ? 'open-quote' : 'inherit')};
+    content: ${(props: DisabledProps) => (props.disabled ? 'no-open-quote' : 'inherit')};
     position: absolute;
     width: 100%;
   }

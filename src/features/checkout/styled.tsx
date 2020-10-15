@@ -64,9 +64,13 @@ export const SeatsSubtotal = styled.div`
 
 export const TypeInfo = styled.span`
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 16px;
-  margin: 0 4px;
+  margin-left: 4px;
+`;
+
+export const Calculation = styled.span`
+  padding-left: 8px;
 `;
 
 export const Total = styled.div`
