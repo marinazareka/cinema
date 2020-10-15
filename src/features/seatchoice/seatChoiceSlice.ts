@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { RootState } from '../../app/store';
-import { Reservation, SeatType } from '../../types/types';
+import { Reservation, SeatType, Status } from '../../types/types';
 
 export interface Seat {
   id: number;
@@ -22,6 +22,7 @@ interface State {
   occupied: Array<number>;
   seatsChosen: Array<Seat>;
   disabled: boolean;
+  status: Status;
 }
 
 export interface GroupedSeats {
@@ -34,7 +35,7 @@ interface Occupied {
   occupied: Array<number>;
 }
 
-const initialState: State = { rows: [], occupied: [], seatsChosen: [], disabled: false };
+const initialState: State = { rows: [], occupied: [], seatsChosen: [], disabled: false, status: Status.Idle };
 
 export const fetchSeats = createAsyncThunk('seatchoice/fetchSeats', async () => {
   const response = await axios.get('/seats');
@@ -61,6 +62,7 @@ const seatChoiceSlice = createSlice({
       state.seatsChosen = [];
     },
     resetSeats: (state) => {
+      state.status = Status.Idle;
       state.occupied = [];
       state.seatsChosen = [];
     },
@@ -85,7 +87,11 @@ const seatChoiceSlice = createSlice({
       state.rows = action.payload;
     });
     builder.addCase(fetchSeatsOccupied.fulfilled, (state, action: PayloadAction<Array<number>>) => {
+      state.status = Status.Complete;
       state.occupied = action.payload;
+    });
+    builder.addCase(fetchSeatsOccupied.rejected, (state) => {
+      state.status = Status.Failed;
     });
   },
 });
@@ -94,7 +100,7 @@ export const { resetChosen, resetSeats, toggleSeatChosen, addReserved, toggleSea
 export const getSeats = (state: RootState): Array<Row> => state.seatchoice.rows;
 export const getDisabled = (state: RootState): boolean => state.seatchoice.disabled;
 export const getSeatsOccupied = (state: RootState): Array<number> => state.seatchoice.occupied;
-export const isSeatsChoiceDisabled = (state: RootState): boolean => !state.seatchoice.occupied.length;
+export const isSeatsChoiceDisabled = (state: RootState): boolean => state.seatchoice.status !== Status.Complete;
 export const getSeatsChosen = (state: RootState): Array<Seat> => state.seatchoice.seatsChosen;
 export const areSeatsChosen = (state: RootState): boolean => !!state.seatchoice.seatsChosen.length;
 export const getSeatsChosenIds = (state: RootState): Array<number> => state.seatchoice.seatsChosen
