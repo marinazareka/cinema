@@ -27,6 +27,7 @@ const ShowTime: FunctionComponent = () => {
           <>
             <Calendar
               showWeekDays={false}
+              firstDayOfWeek={1}
               selectedDays={dateChosen}
               onDayClick={onChange}
               disabledDays={[

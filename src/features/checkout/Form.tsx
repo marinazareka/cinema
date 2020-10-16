@@ -45,8 +45,8 @@ const Form: FunctionComponent = () => {
         </p>
       ) : (
         <p>
-          We will send a link for paying to your e-mail.
-          Your seats are reserved for you for 15 minutes.
+          We will send you a link for paying to your e-mail.
+          Your seats will be reserved for you for 15 minutes.
         </p>
       )}
       <Delimeter />

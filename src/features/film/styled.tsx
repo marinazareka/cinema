@@ -14,6 +14,7 @@ export const Poster = styled.div`
 
   img {
     height: 300px;
+    width: 202.56px;
   }
 `;
 
