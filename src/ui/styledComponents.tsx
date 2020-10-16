@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { colors } from './Settings';
-import { SeatType } from '../types/types';
+import { DisabledProps, SeatType } from '../types/types';
 
 interface SeatProps {
   chosen?: boolean;
@@ -47,4 +47,22 @@ export const Seat = styled.button`
       }
     }
   }
+`;
+
+export const AbsoluteLayout = css`
+  height: 100%;
+  position: absolute;
+  width: 100%;
+`;
+
+export const DisablingContainer = styled.div`
+  &::after {
+    ${AbsoluteLayout}
+    content: ${(props: DisabledProps) => (props.disabled ? 'no-open-quote' : 'inherit')};
+  }
+`;
+
+export const OpacityStyles = css`
+  background-color: ${colors.light};
+  opacity: ${(props: DisabledProps) => (props.disabled ? 0.8 : 0)};
 `;

@@ -3,6 +3,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { RootState } from '../../app/store';
+import { Status } from '../../types/types';
 
 interface Film {
   title: string;
@@ -15,15 +16,23 @@ interface Film {
   genre: Array<string>;
 }
 
-const initialState: Film = {
-  title: '',
-  annotation: '',
-  posterUrl: '',
-  country: [],
-  certificate: '',
-  imdbRating: 0,
-  runtime: '',
-  genre: [],
+interface State {
+  status: Status;
+  data: Film;
+}
+
+const initialState: State = {
+  status: Status.Idle,
+  data: {
+    title: '',
+    annotation: '',
+    posterUrl: '',
+    country: [],
+    certificate: '',
+    imdbRating: 0,
+    runtime: '',
+    genre: [],
+  },
 };
 
 export const fetchFilm = createAsyncThunk('film/fetchFilm', async () => {
@@ -36,17 +45,22 @@ const filmSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchFilm.fulfilled, (state, action: PayloadAction<Film>) => action.payload);
+    builder.addCase(fetchFilm.fulfilled, (state, action: PayloadAction<Film>) => {
+      state.data = action.payload;
+      state.status = Status.Complete;
+    });
   },
 });
 
 export const getFilmInfo = (state: RootState): Film => {
   dayjs.extend(duration);
-  const dur = dayjs.duration(state.film.runtime);
+  const dur = dayjs.duration(state.film.data.runtime);
   return {
-    ...state.film,
+    ...state.film.data,
     runtime: `${dur.hours()}h${dur.minutes() && `${dur.minutes()}min`}`,
   };
 };
+export const getStatus = (state: RootState): Status => state.film.status;
+export const isFilmNotReady = (state: RootState): boolean => state.film.status !== Status.Complete;
 
 export default filmSlice.reducer;

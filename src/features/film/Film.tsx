@@ -1,36 +1,46 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { getFilmInfo } from './filmSlice';
-import { FilmContainer, Poster, Info, Title, Description } from './styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { getFilmInfo, getStatus } from './filmSlice';
+import { FilmContainer, Poster, Info, Title, Description, Detail } from './styled';
+import { Status } from '../../types/types';
 
 const Film: FunctionComponent = () => {
   const film = useSelector(getFilmInfo);
+  const status = useSelector(getStatus);
 
   return (
     <FilmContainer>
-      <Poster>
-        <img src={film.posterUrl} alt={film.title} />
-      </Poster>
-      <Info>
-        <Title>{film.title}</Title>
-        <Description>{film.annotation}</Description>
-        <span>
-          <b>Country: </b>
-          {film.country.join(', ')}
-        </span>
-        <span>
-          <b>Genre: </b>
-          {film.genre.join(', ')}
-        </span>
-        <span>
-          <span>
-            {film.runtime}
-          </span>
-          <span>
-            {film.imdbRating}
-          </span>
-        </span>
-      </Info>
+      {status === Status.Complete && (
+        <>
+          <Poster>
+            <img src={film.posterUrl} alt={film.title} />
+          </Poster>
+          <Info>
+            <Title>{film.title}</Title>
+            <Description>{film.annotation}</Description>
+            <Detail>
+              <b>Country: </b>
+              {film.country.join(', ')}
+            </Detail>
+            <Detail>
+              <b>Genre: </b>
+              {film.genre.join(', ')}
+            </Detail>
+            <Detail>
+              <Detail>
+                <FontAwesomeIcon icon={faClock} />
+                {film.runtime}
+              </Detail>
+              <Detail>
+                <FontAwesomeIcon icon={faHeart} />
+                {film.imdbRating}
+              </Detail>
+            </Detail>
+          </Info>
+        </>
+      )}
     </FilmContainer>
   );
 };

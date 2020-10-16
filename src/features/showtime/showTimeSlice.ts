@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { RootState } from '../../app/store';
+import { Status } from '../../types/types';
 
 export interface Show {
   id: number;
@@ -30,6 +31,7 @@ interface State extends Response {
   showId?: number;
   hall?: number;
   disabled: boolean;
+  status: Status;
 }
 
 const initialState: State = {
@@ -38,6 +40,7 @@ const initialState: State = {
   disabled: false,
   cinema: '',
   address: '',
+  status: Status.Idle,
 };
 
 export const fetchShowtimes = createAsyncThunk('showtime/fetchShowtimes', async () => {
@@ -68,12 +71,17 @@ const showtimeSlice = createSlice({
       state.showtimes = action.payload.showtimes;
       state.cinema = action.payload.cinema;
       state.address = action.payload.address;
+      state.status = Status.Complete;
+    });
+    builder.addCase(fetchShowtimes.rejected, (state) => {
+      state.status = Status.Failed;
     });
   },
 });
 
 export const { setDateChosen, setShowChosen, toggleShowTime } = showtimeSlice.actions;
 export const getDisabled = (state: RootState): boolean => state.showtime.disabled;
+export const isShowsNotReady = (state: RootState): boolean => state.showtime.status !== Status.Complete;
 export const getAvailableShowTimes = (state: RootState): Array<Showtime> => state.showtime.showtimes;
 export const getDateChosen = (state: RootState): Date => new Date(state.showtime.dateChosen);
 export const getShowChosen = (state: RootState): ShowData => ({

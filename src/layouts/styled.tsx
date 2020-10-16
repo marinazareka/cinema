@@ -1,20 +1,22 @@
 import styled from 'styled-components';
 import { colors } from '../ui/Settings';
-import { DisabledProps } from '../types/types';
+import { DisablingContainer, OpacityStyles, AbsoluteLayout } from '../ui/styledComponents';
 
 export const Main = styled.main`
   display: flex; 
   flex-direction: column;
   min-height: calc(100vh);
+  position: relative;
 `;
 
 export const Info = styled.div`
   background-color: ${colors.light};
   display: flex;
   flex-wrap: wrap;
+  min-height: 366px;
 `;
 
-export const SeatChoiceContainer = styled.div`
+export const SeatChoiceContainer = styled(DisablingContainer)`
   align-items: center;
   background-color: ${colors.dark};
   display: flex;
@@ -23,11 +25,27 @@ export const SeatChoiceContainer = styled.div`
   position: relative;
 
   &::after {
-    background-color: ${colors.light};
-    height: 100%;
-    content: ${(props: DisabledProps) => (props.disabled ? 'no-open-quote' : 'inherit')};
-    opacity: ${(props: DisabledProps) => (props.disabled ? 0.8 : 0)};
-    position: absolute;
-    width: 100%;
+    ${OpacityStyles}
   }
+`;
+
+export const Pending = styled.div`
+  ${AbsoluteLayout}
+  ${OpacityStyles}
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
+  text-align: center;
+  padding-top: 14%;
+
+  svg {
+    font-size: 26px;
+  }
+`;
+
+export const PendingInfo = styled.p`
+  padding-top: 8px;
+  line-height: 24px;
+  max-width: 200px;
 `;

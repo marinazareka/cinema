@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { colors } from '../../ui/Settings';
-import { DisabledProps } from '../../types/types';
+import { DisablingContainer } from '../../ui/styledComponents';
 
-export const Cinema = styled.div`
+export const Cinema = styled(DisablingContainer)`
   display: flex;
   flex: 2;
   flex-direction: column;
@@ -16,13 +16,6 @@ export const Cinema = styled.div`
   @media screen and (max-width: 968px) {
     justify-content: flex-start;
     min-width: 100%;
-  }
-
-  &::after {
-    height: 100%;
-    content: ${(props: DisabledProps) => (props.disabled ? 'no-open-quote' : 'inherit')};
-    position: absolute;
-    width: 100%;
   }
 `;
 
