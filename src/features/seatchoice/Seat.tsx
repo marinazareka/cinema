@@ -50,4 +50,4 @@ const SeatComponent: FunctionComponent<Props> = ({ seat, disabled, chosen, index
   );
 };
 
-export default SeatComponent;
+export default React.memo(SeatComponent);
