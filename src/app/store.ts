@@ -1,9 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import filmReducer from '../features/film/filmSlice';
+import showtimeReducer from '../features/showtime/showtimeSlice';
+import seatchoiceReducer from '../features/seatchoice/seatChoiceSlice';
+import checkoutReducer from '../features/checkout/checkoutSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    film: filmReducer,
+    showtime: showtimeReducer,
+    seatchoice: seatchoiceReducer,
+    checkout: checkoutReducer,
   },
 });
 
