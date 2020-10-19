@@ -45,4 +45,4 @@ const Film: FunctionComponent = () => {
   );
 };
 
-export default Film;
+export default React.memo(Film);

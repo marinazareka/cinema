@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
@@ -52,14 +52,18 @@ const filmSlice = createSlice({
   },
 });
 
-export const getFilmInfo = (state: RootState): Film => {
-  dayjs.extend(duration);
-  const dur = dayjs.duration(state.film.data.runtime);
-  return {
-    ...state.film.data,
-    runtime: `${dur.hours()}h${dur.minutes() && `${dur.minutes()}min`}`,
-  };
-};
+export const getFilmInfo = createSelector(
+  (state: RootState) => state.film.data,
+  (data) => {
+    dayjs.extend(duration);
+    const dur = dayjs.duration(data.runtime);
+    return {
+      ...data,
+      runtime: `${dur.hours()}h${dur.minutes() && `${dur.minutes()}min`}`,
+    };
+  }
+);
+
 export const getStatus = (state: RootState): Status => state.film.status;
 export const isFilmNotReady = (state: RootState): boolean => state.film.status !== Status.Complete;
 
