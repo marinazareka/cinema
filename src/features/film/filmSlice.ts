@@ -65,6 +65,5 @@ export const getFilmInfo = createSelector(
 );
 
 export const getStatus = (state: RootState): Status => state.film.status;
-export const isFilmNotReady = (state: RootState): boolean => state.film.status !== Status.Complete;
 
 export default filmSlice.reducer;

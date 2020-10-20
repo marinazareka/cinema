@@ -1,24 +1,16 @@
-import React, { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FunctionComponent, Suspense } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { Main, Info, Pending, PendingInfo } from './styled';
-import Film from '../features/film/Film';
-import ShowTime from '../features/showtime/Showtime';
-import { isFilmNotReady } from '../features/film/filmSlice';
-import { isShowsNotReady } from '../features/showtime/showtimeSlice';
-import { isSeatsNotReady } from '../features/seatchoice/seatChoiceSlice';
-import SeatsLayout from './SeatsLayout';
 
 const Layout: FunctionComponent = () => {
-  const filmNotReady = useSelector(isFilmNotReady);
-  const showsNotReady = useSelector(isShowsNotReady);
-  const seatsNotReady = useSelector(isSeatsNotReady);
-  const loading = filmNotReady || showsNotReady || seatsNotReady;
+  const Film = React.lazy(() => import('../features/film/Film'));
+  const Showtime = React.lazy(() => import('../features/showtime/Showtime'));
+  const SeatsLayout = React.lazy(() => import('./SeatsLayout'));
 
   return (
     <Main>
-      {loading && (
+      <Suspense fallback={(
         <Pending disabled>
           <FontAwesomeIcon icon={faCog} spin />
           <PendingInfo>
@@ -27,11 +19,13 @@ const Layout: FunctionComponent = () => {
           </PendingInfo>
         </Pending>
       )}
-      <Info>
-        <Film />
-        <ShowTime />
-      </Info>
-      <SeatsLayout />
+      >
+        <Info>
+          <Film />
+          <Showtime />
+        </Info>
+        <SeatsLayout />
+      </Suspense>
     </Main>
   );
 };

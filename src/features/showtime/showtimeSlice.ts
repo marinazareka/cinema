@@ -81,7 +81,6 @@ const showtimeSlice = createSlice({
 
 export const { setDateChosen, setShowChosen, toggleShowTime } = showtimeSlice.actions;
 export const getDisabled = (state: RootState): boolean => state.showtime.disabled;
-export const isShowsNotReady = (state: RootState): boolean => state.showtime.status !== Status.Complete;
 export const getAvailableShowTimes = (state: RootState): Array<Showtime> => state.showtime.showtimes;
 export const getDateChosen = createSelector(
   (state: RootState) => state.showtime.dateChosen,
