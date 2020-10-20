@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { Cinema, Screen, Row, RowSymbol } from './styled';
+import { Cinema, Screen, Row, RowSymbol, Hall } from './styled';
 import {
   getSeatsStatus, getSeats, getSeatsOccupied,
   getSeatsChosen, getDisabled
@@ -19,7 +19,7 @@ const SeatChoice: FunctionComponent = () => {
   return (
     <Cinema disabled={disabled}>
       {status === Status.Complete && (
-        <>
+        <Hall>
           <Screen />
           {rows.map((row) => (
             <Row key={row.row}>
@@ -40,7 +40,7 @@ const SeatChoice: FunctionComponent = () => {
             </Row>
           ))}
           <LegendComponent />
-        </>
+        </Hall>
       )}
     </Cinema>
   );

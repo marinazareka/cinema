@@ -1,17 +1,13 @@
 import styled from 'styled-components';
 import { colors } from '../../ui/Settings';
-import { DisablingContainer } from '../../ui/styledComponents';
+import { DisablingContainer, Seat } from '../../ui/styledComponents';
 
 export const Cinema = styled(DisablingContainer)`
   display: flex;
   flex: 2;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
   min-width: 950px;
   overflow: auto;
-  color: ${colors.light};
-  padding: 24px 48px;
 
   @media screen and (max-width: 968px) {
     justify-content: flex-start;
@@ -92,12 +88,27 @@ export const SeatHint = styled.div`
 `;
 
 export const Legend = styled(Row)`
-  margin: 8px 0;
+  margin: 0;
   width: auto;
-  
+  padding-top: 24px;
+`;
+
+export const LegendBlock = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+
+  @media screen and (max-width: 580px) {
+    max-width: 100px;
+  }
+
   span {
     font-size: 14px;
     line-height: 26px;
-    padding: 0 8px;
   }
+`;
+
+export const LegendSeat = styled(Seat)`
+  margin: 0 12px;
 `;
