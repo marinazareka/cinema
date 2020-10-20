@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { Cinema, Screen, Row, RowSymbol, Hall } from './styled';
+import { Cinema, Screen, Row, RowSymbol, Hall, OverflowContainer } from './styled';
 import {
   getSeatsStatus, getSeats, getSeatsOccupied,
   getSeatsChosen, getDisabled
@@ -19,28 +19,32 @@ const SeatChoice: FunctionComponent = () => {
   return (
     <Cinema disabled={disabled}>
       {status === Status.Complete && (
-        <Hall>
-          <Screen />
-          {rows.map((row) => (
-            <Row key={row.row}>
-              <RowSymbol>{row.row}</RowSymbol>
-              <div>
-                {row.seats.map((seat, index) => (
-                  <Seat
-                    key={seat.id}
-                    seat={seat}
-                    disabled={seat.disabled || occupied.some((i) => i === seat.id)}
-                    chosen={chosen.some((i) => i.id === seat.id)}
-                    index={index + 1}
-                    row={row.row}
-                  />
-                ))}
-              </div>
-              <RowSymbol>{row.row}</RowSymbol>
-            </Row>
-          ))}
-          <LegendComponent />
-        </Hall>
+        <>
+          <OverflowContainer>
+            <Hall>
+              <Screen />
+              {rows.map((row) => (
+                <Row key={row.row}>
+                  <RowSymbol>{row.row}</RowSymbol>
+                  <div>
+                    {row.seats.map((seat, index) => (
+                      <Seat
+                        key={seat.id}
+                        seat={seat}
+                        disabled={seat.disabled || occupied.some((i) => i === seat.id)}
+                        chosen={chosen.some((i) => i.id === seat.id)}
+                        index={index + 1}
+                        row={row.row}
+                      />
+                    ))}
+                  </div>
+                  <RowSymbol>{row.row}</RowSymbol>
+                </Row>
+              ))}
+            </Hall>
+          </OverflowContainer>
+          <Hall><LegendComponent /></Hall>
+        </>
       )}
     </Cinema>
   );

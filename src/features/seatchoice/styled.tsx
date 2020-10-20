@@ -4,11 +4,20 @@ import { DisablingContainer, Seat } from '../../ui/styledComponents';
 
 export const Cinema = styled(DisablingContainer)`
   display: flex;
+  flex-direction: column;
   flex: 2;
-  justify-content: center;
-  min-width: 950px;
-  overflow: auto;
 
+  @media screen and (max-width: 968px) {
+    min-width: 100%;
+  }
+`;
+
+export const OverflowContainer = styled.div`
+  overflow: auto;
+  min-width: 950px;
+  display: flex;
+  justify-content: center;
+  
   @media screen and (max-width: 968px) {
     justify-content: flex-start;
     min-width: 100%;
@@ -20,7 +29,7 @@ export const Hall = styled.div`
   color: ${colors.light};
   display: flex;
   flex-direction: column;
-  padding: 24px 48px;
+  padding: 12px 48px;
 `;
 
 export const Screen = styled.div`
@@ -90,7 +99,10 @@ export const SeatHint = styled.div`
 export const Legend = styled(Row)`
   margin: 0;
   width: auto;
-  padding-top: 24px;
+
+  &:last-child {
+    padding: 12px 0;
+  }
 `;
 
 export const LegendBlock = styled.div`
