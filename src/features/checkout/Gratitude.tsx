@@ -47,4 +47,4 @@ const Gratitude: FunctionComponent = () => {
   );
 };
 
-export default Gratitude;
+export default React.memo(Gratitude);

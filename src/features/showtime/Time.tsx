@@ -44,4 +44,4 @@ const Time: FunctionComponent = () => {
   );
 };
 
-export default Time;
+export default React.memo(Time);

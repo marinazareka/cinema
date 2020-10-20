@@ -15,7 +15,7 @@ const Film: FunctionComponent = () => {
       {status === Status.Complete && (
         <>
           <Poster>
-            <img src={film.posterUrl} alt={film.title} />
+            <img src={film.posterUrl} height="300px" width="203px" alt={film.title} />
           </Poster>
           <Info>
             <Title>{film.title}</Title>

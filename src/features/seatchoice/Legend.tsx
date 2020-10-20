@@ -28,4 +28,4 @@ const LegendComponent: FunctionComponent = () => (
   </>
 );
 
-export default LegendComponent;
+export default React.memo(LegendComponent);

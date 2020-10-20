@@ -110,7 +110,6 @@ const seatChoiceSlice = createSlice({
 
 export const { resetChosen, resetSeats, toggleSeatChosen, addReserved, toggleSeatChoice } = seatChoiceSlice.actions;
 export const getSeatsStatus = (state: RootState): Status => state.seatchoice.seatsStatus;
-export const isSeatsNotReady = (state: RootState): boolean => state.seatchoice.seatsStatus !== Status.Complete;
 export const getSeats = (state: RootState): Array<Row> => state.seatchoice.rows;
 export const getDisabled = (state: RootState): boolean => state.seatchoice.disabled;
 export const getSeatsOccupied = (state: RootState): Array<number> => state.seatchoice.occupied;
