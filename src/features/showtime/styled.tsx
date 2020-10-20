@@ -104,6 +104,13 @@ export const Calendar = styled(DayPicker)`
         font-size: 1.15em;
       }
     }
+
+    &-Body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 240px;
+    }
   }
 `;
 

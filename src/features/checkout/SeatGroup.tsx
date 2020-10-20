@@ -24,4 +24,4 @@ const SeatGroup: FunctionComponent<Props> = ({ group }) => {
   );
 };
 
-export default SeatGroup;
+export default React.memo(SeatGroup);
