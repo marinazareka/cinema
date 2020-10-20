@@ -11,11 +11,6 @@ export const FilmContainer = styled.div`
 
 export const Poster = styled.div`
   padding-right: 32px;
-
-  img {
-    height: 300px;
-    width: 202.56px;
-  }
 `;
 
 export const Info = styled.div`
