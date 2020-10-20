@@ -17,16 +17,22 @@ export const Info = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 72%;
+
+  @media screen and (max-width: 1280px) {
+    text-align: center;
+    align-items: center;
+  }
 `;
 
 export const Title = styled.p`
   font-size: 24px;
+  line-height: 30px;
   margin: 16px 0;
 `;
 
 export const Description = styled.p`
   max-width: 82%;
-  padding: 0 24px 16px;
+  padding-bottom: 16px;
   line-height: 22px;
   border-bottom: 1px solid ${colors.textGray};
   margin-bottom: 16px;
