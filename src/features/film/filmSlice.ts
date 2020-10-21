@@ -9,11 +9,11 @@ interface Film {
   title: string;
   annotation: string;
   posterUrl: string;
-  country: Array<string>;
+  country: string[];
   certificate: string;
   imdbRating: number;
   runtime: string;
-  genre: Array<string>;
+  genre: string[];
 }
 
 interface State {
