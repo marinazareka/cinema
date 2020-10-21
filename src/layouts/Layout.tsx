@@ -1,32 +1,38 @@
-import React, { FunctionComponent, Suspense } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { Main, Info, Pending, PendingInfo } from './styled';
+import React, { FunctionComponent } from 'react';
+import { useSelector } from 'react-redux';
+import { Main, Info } from './styled';
+import Film from '../features/film/Film';
+import Showtime from '../features/showtime/Showtime';
+import { getFilmStatus } from '../features/film/filmSlice';
+import { getShowsStatus } from '../features/showtime/showtimeSlice';
+import { getSeatsStatus } from '../features/seatchoice/seatChoiceSlice';
+import PendingLayout from './Pending';
+import SeatsLayout from './SeatsLayout';
+import { ErrorBoundary } from './Error';
+import { Status } from '../types/types';
 
 const Layout: FunctionComponent = () => {
-  const Film = React.lazy(() => import('../features/film/Film'));
-  const Showtime = React.lazy(() => import('../features/showtime/Showtime'));
-  const SeatsLayout = React.lazy(() => import('./SeatsLayout'));
+  const filmStatus = useSelector(getFilmStatus);
+  const showsStatus = useSelector(getShowsStatus);
+  const seatsStatus = useSelector(getSeatsStatus);
+  const loading = filmStatus !== Status.Complete
+    || showsStatus !== Status.Complete
+    || seatsStatus !== Status.Complete;
+  const error = filmStatus === Status.Failed
+    || showsStatus === Status.Failed
+    || seatsStatus === Status.Failed;
 
   return (
-    <Main>
-      <Suspense fallback={(
-        <Pending disabled>
-          <FontAwesomeIcon icon={faCog} spin />
-          <PendingInfo>
-            We are loading info about
-            the film and showtimes...
-          </PendingInfo>
-        </Pending>
-      )}
-      >
+    <ErrorBoundary>
+      <Main>
+        {loading && <PendingLayout error={error} />}
         <Info>
           <Film />
           <Showtime />
         </Info>
         <SeatsLayout />
-      </Suspense>
-    </Main>
+      </Main>
+    </ErrorBoundary>
   );
 };
 

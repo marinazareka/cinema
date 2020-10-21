@@ -98,5 +98,5 @@ export const getAvailableTime = createSelector(
   [getDateChosen, (state: RootState) => state.showtime.showtimes],
   (dateChosen, showtimes) => showtimes.find((item) => dayjs(item.date).isSame(dayjs(dateChosen), 'day'))?.shows || []
 );
-
+export const getShowsStatus = (state: RootState): Status => state.showtime.status;
 export default showtimeSlice.reducer;
