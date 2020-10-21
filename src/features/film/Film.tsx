@@ -2,13 +2,13 @@ import React, { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faHeart } from '@fortawesome/free-solid-svg-icons';
-import { getFilmInfo, getStatus } from './filmSlice';
+import { getFilmInfo, getFilmStatus } from './filmSlice';
 import { FilmContainer, Poster, Info, Title, Description, Detail } from './styled';
 import { Status } from '../../types/types';
 
 const Film: FunctionComponent = () => {
   const film = useSelector(getFilmInfo);
-  const status = useSelector(getStatus);
+  const status = useSelector(getFilmStatus);
 
   return (
     <FilmContainer>
@@ -20,14 +20,18 @@ const Film: FunctionComponent = () => {
           <Info>
             <Title>{film.title}</Title>
             <Description>{film.annotation}</Description>
-            <Detail>
-              <b>Country: </b>
-              {film.country.join(', ')}
-            </Detail>
-            <Detail>
-              <b>Genre: </b>
-              {film.genre.join(', ')}
-            </Detail>
+            {film.country.length && (
+              <Detail>
+                <b>Country: </b>
+                {film.country.join(', ')}
+              </Detail>
+            )}
+            {film.genre.length && (
+              <Detail>
+                <b>Genre: </b>
+                {film.genre.join(', ')}
+              </Detail>
+            )}
             <Detail>
               <Detail>
                 <FontAwesomeIcon icon={faClock} />
