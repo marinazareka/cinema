@@ -48,7 +48,7 @@ const ShowTime: FunctionComponent = () => {
       />
       {showtimes.length
         ? <Time />
-        : <Tip>Sorry, there're no showtimes for the film.</Tip>}
+        : <Tip>Sorry, there&apos;re no showtimes for the film.</Tip>}
     </ShowTimeContainer>
   );
 };
