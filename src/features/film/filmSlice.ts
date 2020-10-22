@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import http from '../../http';
 import { RootState } from '../../app/store';
 import { Status } from '../../types/types';
 
@@ -36,7 +36,7 @@ const initialState: State = {
 };
 
 export const fetchFilm = createAsyncThunk('film/fetchFilm', async () => {
-  const response = await axios.get('/film');
+  const response = await http.get('/film');
   return response.data as Film;
 });
 

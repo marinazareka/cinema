@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import axios from 'axios';
 import dayjs from 'dayjs';
+import http from '../../http';
 import { RootState } from '../../app/store';
 import { Reservation, SeatType, Status } from '../../types/types';
 
@@ -46,14 +46,14 @@ const initialState: State = {
 };
 
 export const fetchSeats = createAsyncThunk('seatchoice/fetchSeats', async () => {
-  const response = await axios.get('/seats');
+  const response = await http.get('/seats');
   return response.data as Row[];
 });
 
 export const fetchSeatsOccupied = createAsyncThunk('seatchoice/fetchSeatsOccupied', async (showId: number) => {
-  const occupiedResponse = await axios.get(`/occupied?showId=${showId}`);
+  const occupiedResponse = await http.get(`/occupied?showId=${showId}`);
   const occupied = occupiedResponse.data as Occupied[];
-  const reservedResponse = await axios.get(`/reserved?showId=${showId}`);
+  const reservedResponse = await http.get(`/reserved?showId=${showId}`);
   const reserved = reservedResponse.data as Reservation[];
   const activeReserved = reserved.filter((res: Reservation) => dayjs().isBefore(dayjs(res.until)));
   return [

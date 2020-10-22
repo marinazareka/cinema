@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { RootState } from '../../app/store';
+import http from '../../http';
 import { Status } from '../../types/types';
 
 export interface Show {
@@ -44,7 +44,7 @@ const initialState: State = {
 };
 
 export const fetchShowtimes = createAsyncThunk('showtime/fetchShowtimes', async () => {
-  const response = await axios.get('/shows');
+  const response = await http.get('/shows');
   return response.data as Response;
 });
 
