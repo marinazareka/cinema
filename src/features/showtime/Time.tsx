@@ -29,7 +29,7 @@ const Time: FunctionComponent = () => {
                 key={show.id}
                 active={show.id === showIdChosen}
                 type="button"
-                disabled={dayjs().isAfter(dayjs(show.time))}
+                disabled={dayjs(show.time).diff(dayjs(), 'hour') < 0}
                 onClick={() => onChange(show)}
               >
                 {dayjs(show.time).format('HH:mm')}

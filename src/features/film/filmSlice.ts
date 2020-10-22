@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import http from '../../http';
 import { RootState } from '../../app/store';
 import { Status } from '../../types/types';
 
@@ -9,11 +9,11 @@ interface Film {
   title: string;
   annotation: string;
   posterUrl: string;
-  country: Array<string>;
+  country: string[];
   certificate: string;
   imdbRating: number;
   runtime: string;
-  genre: Array<string>;
+  genre: string[];
 }
 
 interface State {
@@ -36,7 +36,7 @@ const initialState: State = {
 };
 
 export const fetchFilm = createAsyncThunk('film/fetchFilm', async () => {
-  const response = await axios.get('/film');
+  const response = await http.get('/film');
   return response.data as Film;
 });
 
@@ -46,24 +46,20 @@ const filmSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchFilm.fulfilled, (state, action: PayloadAction<Film>) => {
-      state.data = action.payload;
+      dayjs.extend(duration);
+      const dur = dayjs.duration(action.payload.runtime);
+      state.data = {
+        ...action.payload,
+        runtime: `${dur.hours()}h${dur.minutes() && `${dur.minutes()}min`}`,
+      };
       state.status = Status.Complete;
+    });
+    builder.addCase(fetchFilm.rejected, (state) => {
+      state.status = Status.Failed;
     });
   },
 });
 
-export const getFilmInfo = createSelector(
-  (state: RootState) => state.film.data,
-  (data) => {
-    dayjs.extend(duration);
-    const dur = dayjs.duration(data.runtime);
-    return {
-      ...data,
-      runtime: `${dur.hours()}h${dur.minutes() && `${dur.minutes()}min`}`,
-    };
-  }
-);
-
-export const getStatus = (state: RootState): Status => state.film.status;
-
+export const getFilmInfo = (state: RootState): Film => state.film.data;
+export const getFilmStatus = (state: RootState): Status => state.film.status;
 export default filmSlice.reducer;

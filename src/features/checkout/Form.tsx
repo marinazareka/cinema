@@ -40,12 +40,12 @@ const Form: FunctionComponent = () => {
     <div>
       {status === Status.Failed ? (
         <p>
-          Sorry, there was some error while saving your data.
-          Try again, please.
+          Error occurred while saving your data.
+          Please, try again later.
         </p>
       ) : (
         <p>
-          We will send you a link for paying to your e-mail.
+          We will send you a payment link to your email.
           Your seats will be reserved for you for 15 minutes.
         </p>
       )}

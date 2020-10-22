@@ -1,3 +1,9 @@
+export enum LoadingStatus {
+  Pending = 'pending',
+  ConnectionError = 'connection',
+  OtherError = 'error'
+}
+
 export enum SeatType {
   Single = 'single',
   Double = 'double',
@@ -24,7 +30,7 @@ export interface UserData {
 
 export interface ReservationData extends UserData {
   showId: number;
-  seatsIds: Array<number>;
+  seatsIds: number[];
 }
 
 export interface Reservation extends ReservationData {

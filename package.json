@@ -41,7 +41,7 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint:css": "stylelint './src/**/*.js'",
-    "mock": "json-server --watch api/data.js --port 4000"
+    "mock": "json-server --watch api/data.js --routes api/routes.json --port 4000"
   },
   "eslintConfig": {
     "extends": "react-app"

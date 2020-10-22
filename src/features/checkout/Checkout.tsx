@@ -36,12 +36,12 @@ const Checkout: FunctionComponent = () => {
 
         <ButtonsBlock>
           {step === CheckoutStep.Form && (
-            <ArrowButton type="button" onClick={prevClick} title="Previous">
+            <ArrowButton type="button" onClick={prevClick} title="Previous step">
               <FontAwesomeIcon icon={faArrowLeft} />
             </ArrowButton>
           )}
           {seatsChosen && step === CheckoutStep.Total && (
-            <ArrowButton type="button" onClick={nextClick} title="Next">
+            <ArrowButton type="button" onClick={nextClick} title="Next step">
               <FontAwesomeIcon icon={faArrowRight} />
             </ArrowButton>
           )}

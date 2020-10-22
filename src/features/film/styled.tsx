@@ -9,10 +9,6 @@ export const FilmContainer = styled.div`
   padding: 32px;
 `;
 
-export const Poster = styled.div`
-  padding-right: 32px;
-`;
-
 export const Info = styled.div`
   display: flex;
   flex-direction: column;

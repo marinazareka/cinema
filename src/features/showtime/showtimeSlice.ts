@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import axios from 'axios';
 import dayjs from 'dayjs';
 import { RootState } from '../../app/store';
+import http from '../../http';
 import { Status } from '../../types/types';
 
 export interface Show {
@@ -19,11 +19,11 @@ interface ShowData extends Show, CinemaData {}
 
 interface Showtime {
   date: string;
-  shows: Array<Show>;
+  shows: Show[];
 }
 
 interface Response extends CinemaData {
-  showtimes: Array<Showtime>;
+  showtimes: Showtime[];
 }
 
 interface State extends Response {
@@ -44,7 +44,7 @@ const initialState: State = {
 };
 
 export const fetchShowtimes = createAsyncThunk('showtime/fetchShowtimes', async () => {
-  const response = await axios.get('/shows');
+  const response = await http.get('/shows');
   return response.data as Response;
 });
 
@@ -80,10 +80,12 @@ const showtimeSlice = createSlice({
 });
 
 export const { setDateChosen, setShowChosen, toggleShowTime } = showtimeSlice.actions;
+
+export const getShowsStatus = (state: RootState): Status => state.showtime.status;
 export const getDisabled = (state: RootState): boolean => state.showtime.disabled;
-export const getAvailableShowTimes = (state: RootState): Array<Showtime> => state.showtime.showtimes;
-export const getDateChosen = createSelector(
-  (state: RootState) => state.showtime.dateChosen,
+export const getAvailableShowTimes = (state: RootState): Showtime[] => state.showtime.showtimes;
+export const getDateChosen = createSelector<RootState, string, Date>(
+  (state) => state.showtime.dateChosen,
   (dateChosen) => new Date(dateChosen)
 );
 export const getShowChosen = (state: RootState): ShowData => ({
@@ -94,9 +96,10 @@ export const getShowChosen = (state: RootState): ShowData => ({
   address: state.showtime.address,
 });
 export const getShowIdChosen = (state: RootState): number => state.showtime.showId as number;
-export const getAvailableTime = createSelector(
-  [getDateChosen, (state: RootState) => state.showtime.showtimes],
-  (dateChosen, showtimes) => showtimes.find((item) => dayjs(item.date).isSame(dayjs(dateChosen), 'day'))?.shows || []
+export const getAvailableTime = createSelector<RootState, Showtime[], string, Show[]>(
+  (state) => state.showtime.showtimes,
+  (state) => state.showtime.dateChosen,
+  (showtimes, dateChosen) => showtimes.find((item) => dayjs(item.date).isSame(dayjs(dateChosen), 'day'))?.shows || []
 );
 
 export default showtimeSlice.reducer;

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import dayjs from 'dayjs';
+import http from '../../http';
 import { RootState } from '../../app/store';
 import { UserData, Reservation, ReservationData, Status } from '../../types/types';
 
@@ -15,12 +15,17 @@ interface State extends UserData {
   status: Status;
 }
 
-const initialState: State = { step: 0, name: '', mail: '', status: Status.Idle };
+const initialState: State = {
+  step: 0,
+  name: '',
+  mail: '',
+  status: Status.Idle,
+};
 
 export const postReservation = createAsyncThunk<Reservation, ReservationData>(
   'seatchoice/postReservation',
   async (reservation) => {
-    const response = await axios.post('/reserved', {
+    const response = await http.post('/reserved', {
       ...reservation,
       until: dayjs().add(15, 'minute'),
     });

@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
 import dayjs from 'dayjs';
+import http from '../../http';
 import { RootState } from '../../app/store';
 import { Reservation, SeatType, Status } from '../../types/types';
 
@@ -14,13 +14,13 @@ export interface Seat {
 
 interface Row {
   row: string;
-  seats: Array<Seat>;
+  seats: Seat[];
 }
 
 interface State {
-  rows: Array<Row>;
-  occupied: Array<number>;
-  seatsChosen: Array<Seat>;
+  rows: Row[];
+  occupied: number[];
+  seatsChosen: Seat[];
   disabled: boolean;
   seatsStatus: Status;
   occupiedStatus: Status;
@@ -28,12 +28,12 @@ interface State {
 
 export interface GroupedSeats {
   type: SeatType;
-  seats: Array<Seat>;
+  seats: Seat[];
 }
 
 interface Occupied {
   date: string;
-  occupied: Array<number>;
+  occupied: number[];
 }
 
 const initialState: State = {
@@ -46,19 +46,19 @@ const initialState: State = {
 };
 
 export const fetchSeats = createAsyncThunk('seatchoice/fetchSeats', async () => {
-  const response = await axios.get('/seats');
-  return response.data as Array<Row>;
+  const response = await http.get('/seats');
+  return response.data as Row[];
 });
 
 export const fetchSeatsOccupied = createAsyncThunk('seatchoice/fetchSeatsOccupied', async (showId: number) => {
-  const occupiedResponse = await axios.get(`/occupied?showId=${showId}`);
-  const occupied = occupiedResponse.data as Array<Occupied>;
-  const reservedResponse = await axios.get(`/reserved?showId=${showId}`);
-  const reserved = reservedResponse.data as Array<Reservation>;
+  const occupiedResponse = await http.get(`/occupied?showId=${showId}`);
+  const occupied = occupiedResponse.data as Occupied[];
+  const reservedResponse = await http.get(`/reserved?showId=${showId}`);
+  const reserved = reservedResponse.data as Reservation[];
   const activeReserved = reserved.filter((res: Reservation) => dayjs().isBefore(dayjs(res.until)));
   return [
     ...(occupied.length ? occupied[0].occupied : []),
-    ...activeReserved.reduce((prev: Array<number>, curr) => [...prev, ...curr.seatsIds], []),
+    ...activeReserved.reduce((prev: number[], curr) => [...prev, ...curr.seatsIds], []),
   ];
 });
 
@@ -82,7 +82,7 @@ const seatChoiceSlice = createSlice({
         state.seatsChosen.push(action.payload);
       }
     },
-    addReserved: (state, action: PayloadAction<Array<number>>) => {
+    addReserved: (state, action: PayloadAction<number[]>) => {
       state.seatsChosen = [];
       state.occupied = [...state.occupied, ...action.payload];
     },
@@ -91,14 +91,14 @@ const seatChoiceSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchSeats.fulfilled, (state, action: PayloadAction<Array<Row>>) => {
+    builder.addCase(fetchSeats.fulfilled, (state, action: PayloadAction<Row[]>) => {
       state.rows = action.payload;
       state.seatsStatus = Status.Complete;
     });
     builder.addCase(fetchSeats.rejected, (state) => {
       state.seatsStatus = Status.Failed;
     });
-    builder.addCase(fetchSeatsOccupied.fulfilled, (state, action: PayloadAction<Array<number>>) => {
+    builder.addCase(fetchSeatsOccupied.fulfilled, (state, action: PayloadAction<number[]>) => {
       state.occupied = action.payload;
       state.occupiedStatus = Status.Complete;
     });
@@ -110,15 +110,18 @@ const seatChoiceSlice = createSlice({
 
 export const { resetChosen, resetSeats, toggleSeatChosen, addReserved, toggleSeatChoice } = seatChoiceSlice.actions;
 export const getSeatsStatus = (state: RootState): Status => state.seatchoice.seatsStatus;
-export const getSeats = (state: RootState): Array<Row> => state.seatchoice.rows;
+export const getSeats = (state: RootState): Row[] => state.seatchoice.rows;
 export const getDisabled = (state: RootState): boolean => state.seatchoice.disabled;
-export const getSeatsOccupied = (state: RootState): Array<number> => state.seatchoice.occupied;
-export const isSeatsChoiceDisabled = (state: RootState): boolean => state.seatchoice.occupiedStatus !== Status.Complete;
-export const getSeatsChosen = (state: RootState): Array<Seat> => state.seatchoice.seatsChosen;
+export const getSeatsOccupied = (state: RootState): number[] => state.seatchoice.occupied;
+export const isSeatsChoiceDisabled = createSelector<RootState, Status, boolean>(
+  (state) => state.seatchoice.occupiedStatus,
+  (occupiedStatus) => occupiedStatus !== Status.Complete
+);
+export const getSeatsChosen = (state: RootState): Seat[] => state.seatchoice.seatsChosen;
 export const areSeatsChosen = (state: RootState): boolean => !!state.seatchoice.seatsChosen.length;
-export const getSeatsChosenIds = (state: RootState): Array<number> => state.seatchoice.seatsChosen
+export const getSeatsChosenIds = (state: RootState): number[] => state.seatchoice.seatsChosen
   .map((seat) => seat.id);
-export const getGroupedSeatsChosen = (state: RootState): Array<GroupedSeats> => Object.values(SeatType).map((type) => ({
+export const getGroupedSeatsChosen = (state: RootState): GroupedSeats[] => Object.values(SeatType).map((type) => ({
   type,
   seats: state.seatchoice.seatsChosen.filter((seat) => seat.type === type),
 }));
