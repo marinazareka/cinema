@@ -1,3 +1,23 @@
+# cinema
+
+Web app to buy cinema tickets: 
+* information about film
+* calendar view
+* occupied and reserved seats
+* reserving seats
+
+To run:
+
+`yarn` to download `node_modules`<br />
+`yarn mock` to start json-server<br />
+`yarn start` to start the app<br />
+
+If you want the app in production mode:
+
+`yarn build` to build<br />
+`yarn global add serve`<br />
+`serve -s build` to deploy
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
 ## Available Scripts
