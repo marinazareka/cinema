@@ -29,7 +29,7 @@ export const SeatChoiceContainer = styled(DisablingContainer)`
   }
 `;
 
-export const Pending = styled.div`
+export const Loading = styled.div`
   ${AbsoluteLayout}
   ${OpacityStyles}
   display: flex;
@@ -44,8 +44,14 @@ export const Pending = styled.div`
   }
 `;
 
-export const PendingInfo = styled.p`
+export const Button = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+`;
+
+export const LoadingInfo = styled.p`
   padding-top: 8px;
   line-height: 24px;
-  max-width: 200px;
+  max-width: 235px;
 `;

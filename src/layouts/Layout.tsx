@@ -6,10 +6,10 @@ import Showtime from '../features/showtime/Showtime';
 import { getFilmStatus } from '../features/film/filmSlice';
 import { getShowsStatus } from '../features/showtime/showtimeSlice';
 import { getSeatsStatus } from '../features/seatchoice/seatChoiceSlice';
-import PendingLayout from './Pending';
+import LoadingLayout from './Loading';
 import SeatsLayout from './SeatsLayout';
 import { ErrorBoundary } from './Error';
-import { Status } from '../types/types';
+import { LoadingStatus, Status } from '../types/types';
 
 const Layout: FunctionComponent = () => {
   const filmStatus = useSelector(getFilmStatus);
@@ -25,7 +25,7 @@ const Layout: FunctionComponent = () => {
   return (
     <ErrorBoundary>
       <Main>
-        {loading && <PendingLayout error={error} />}
+        {loading && <LoadingLayout status={error ? LoadingStatus.ConnectionError : LoadingStatus.Pending} />}
         <Info>
           <Film />
           <Showtime />

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { getFilmInfo, getFilmStatus } from './filmSlice';
-import { FilmContainer, Poster, Info, Title, Description, Detail } from './styled';
+import { FilmContainer, Info, Title, Description, Detail } from './styled';
 import { Status } from '../../types/types';
 
 const Film: FunctionComponent = () => {
@@ -14,9 +14,9 @@ const Film: FunctionComponent = () => {
     <FilmContainer>
       {status === Status.Complete && (
         <>
-          <Poster>
+          <div>
             <img src={film.posterUrl} height="300px" width="203px" alt={film.title} />
-          </Poster>
+          </div>
           <Info>
             <Title>{film.title}</Title>
             <Description>{film.annotation}</Description>

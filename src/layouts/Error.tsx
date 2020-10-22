@@ -2,7 +2,8 @@ import React from 'react';
 import { FilmContainer } from '../features/film/styled';
 import { ShowTimeContainer } from '../features/showtime/styled';
 import { Info, Main, SeatChoiceContainer } from './styled';
-import PendingLayout from './Pending';
+import LoadingLayout from './Loading';
+import { LoadingStatus } from '../types/types';
 
 interface State {
   hasError: boolean;
@@ -25,7 +26,7 @@ export class ErrorBoundary extends React.Component<Record<string, unknown>, Stat
     if (hasError) {
       return (
         <Main>
-          <PendingLayout error />
+          <LoadingLayout status={LoadingStatus.OtherError} />
           <Info>
             <FilmContainer />
             <ShowTimeContainer disabled />

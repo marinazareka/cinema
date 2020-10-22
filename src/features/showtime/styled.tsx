@@ -11,7 +11,7 @@ export const ShowTimeContainer = styled(DisablingContainer)`
   flex: 1;
   flex-direction: column;
   justify-content: center;
-  padding: 32px 0;
+  padding: 32px;
 
   @media screen and (min-width: 580px) {
     padding: 32px 48px;
@@ -130,23 +130,23 @@ interface TimeButtonProps {
 
 export const TimeButton = styled.button`
   border: 1px solid ${colors.light};
-    cursor: pointer;
-    display: inline-block;
-    margin: 0 4px;
-    padding: 4px;
-    font-size: inherit;
-    background: none;
-    background-color: ${(props: TimeButtonProps) => props.active && colors.light};
-    color: ${(props: TimeButtonProps) => (props.active ? colors.darkBlue : 'inherit')};
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 4px;
+  padding: 4px;
+  font-size: inherit;
+  background: none;
+  background-color: ${(props: TimeButtonProps) => props.active && colors.light};
+  color: ${(props: TimeButtonProps) => (props.active ? colors.darkBlue : 'inherit')};
 
-    &:not[disabled]:hover {
-      background-color: ${colors.light};
-      color: ${colors.darkBlue};
-    }
+  &:not[disabled]:hover {
+    background-color: ${colors.light};
+    color: ${colors.darkBlue};
+  }
 
-    &[disabled] {
-      background-color: ${colors.dateDisable};
-      border-color: ${colors.dateDisable};
-      cursor: default;
-    }
+  &[disabled] {
+    background-color: ${colors.dateDisable};
+    border-color: ${colors.dateDisable};
+    cursor: default;
+  }
 `;

@@ -1,3 +1,9 @@
+export enum LoadingStatus {
+  Pending = 'pending',
+  ConnectionError = 'connection',
+  OtherError = 'error'
+}
+
 export enum SeatType {
   Single = 'single',
   Double = 'double',
