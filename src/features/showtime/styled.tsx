@@ -77,7 +77,7 @@ export const Calendar = styled(DayPicker)`
       background-position: center;
       background-size: 50%;
       background-repeat: no-repeat;
-      color: #8B9898;
+      color: ${colors.dateDisable};
       cursor: pointer;
 
       &--interactionDisabled {

@@ -22,10 +22,10 @@ const LegendComponent: FunctionComponent = () => (
     </Legend>
     <Legend>
       <LegendBlock>
-        <LegendSeat disabled seatType={SeatType.Single} title="disabled due to covid-19 prevention">
+        <LegendSeat disabled seatType={SeatType.Single} title="disabled due to prevention for covid-19">
           <FontAwesomeIcon icon={faVirusSlash} />
         </LegendSeat>
-        <span>disabled due to covid-19 prevention</span>
+        <span>disabled due to prevention for covid-19</span>
       </LegendBlock>
       <LegendBlock>
         <LegendSeat type="button" disabled seatType={SeatType.Single} title="occupied" />

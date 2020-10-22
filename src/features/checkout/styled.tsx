@@ -6,15 +6,6 @@ export const Container = styled.div`
   flex: 1;
   justify-content: center;
   padding: 24px 0 48px;
-
-  /* .seat-amount {
-    min-width: 64px;
-  } 
-    .warning {
-      font-size: 12px;
-      line-height: 14px;
-      padding-top: 8px;
-    } */
 `;
 
 export const CheckoutBlock = styled.div`
@@ -24,7 +15,7 @@ export const CheckoutBlock = styled.div`
   background-color: ${colors.darkOpacity};
   border: 2px solid ${colors.light};
   color: ${colors.light};
-  min-height: 400px;
+  min-height: 410px;
   padding: 32px;
   position: relative;
   width: 300px;
@@ -158,6 +149,7 @@ export const Group = styled.div`
 export const GratitudeBlock = styled.div`
   & > p {
     padding-bottom: 8px;
+    word-break: break-all;
   }
 
   button {
@@ -166,7 +158,7 @@ export const GratitudeBlock = styled.div`
 `;
 
 export const Reservation = styled.div`
-  border-left: 1px solid #fff;
+  border-left: 1px solid ${colors.white};
   padding-left: 8px;
   margin: 0 0 16px 16px;
 

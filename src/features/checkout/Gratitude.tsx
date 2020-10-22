@@ -41,7 +41,7 @@ const Gratitude: FunctionComponent = () => {
           </time>
         </p>
       </Reservation>
-      <p>We pay your attention to the covid-19 prevention methods and inform you to wear a medicine mask.</p>
+      <p>We pay your attention to the covid-19 prevention measures and ask you to wear a face mask.</p>
       <Confirm type="button" onClick={resetDisabling}>Choose another tickets</Confirm>
     </GratitudeBlock>
   );
