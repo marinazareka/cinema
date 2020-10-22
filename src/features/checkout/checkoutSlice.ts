@@ -15,7 +15,12 @@ interface State extends UserData {
   status: Status;
 }
 
-const initialState: State = { step: 0, name: '', mail: '', status: Status.Idle };
+const initialState: State = {
+  step: 0,
+  name: '',
+  mail: '',
+  status: Status.Idle,
+};
 
 export const postReservation = createAsyncThunk<Reservation, ReservationData>(
   'seatchoice/postReservation',

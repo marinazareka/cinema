@@ -120,7 +120,7 @@ export const TimeContainer = styled.div`
 
 export const Tip = styled.div`
   display: inline-block;
-  line-height: 24px;
+  line-height: 32px;
   padding-left: 4px;
 `;
 
