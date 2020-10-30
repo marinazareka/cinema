@@ -6,6 +6,8 @@ Web app to buy cinema tickets:
 * occupied and reserved seats
 * reserving seats
 
+<img src="demo/desktop.jpeg" width="auto" height="350" />    <img src="demo/mobile.gif" width="auto" height="350" />
+
 To run:
 
 `yarn` to download `node_modules`<br />
