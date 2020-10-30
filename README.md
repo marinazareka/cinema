@@ -8,7 +8,7 @@ Web app to buy cinema tickets:
 
 <img src="demo/desktop.png" width="auto" height="350" />    <img src="demo/mobile.gif" width="auto" height="350" />
 
-To run:
+## To run:
 
 `yarn` to download `node_modules`<br />
 `yarn mock` to start json-server<br />
